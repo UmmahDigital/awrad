@@ -1,0 +1,45 @@
+:host > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > * {
+    margin: 16px auto;
+  }
+}
+
+.invite-link {
+  background: lightgray;
+  padding: 20px;
+  text-align: left;
+  word-break: break-all;
+}
+
+.group-invite > * {
+  text-align: center !important;
+
+  margin: 20px auto !important;
+  //   background-color: red;
+}
+
+.copy-msg-btn {
+  // border-radius: 10px !important;
+  display: block;
+  width: 50%;
+  margin-top: -68px!important;
+  height: 48px!important;
+  padding: 0;
+  line-height: 48px!important;
+}
+
+mat-form-field{
+
+}
+
+textarea{
+  font-size: larger!important;
+  padding-top: 16px!important;
+  padding-bottom: 48px!important;
+
+  
+}

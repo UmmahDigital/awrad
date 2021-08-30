@@ -1,0 +1,64 @@
+<div class="home">
+
+
+    <label style="display:block;text-align: center;">﷽</label>
+
+
+
+    <img class="logo" src="assets/khitma-logo.png" alt="logo of khitmah" />
+
+
+    <section *ngIf="groups">
+
+        <hr style="margin-bottom:32px" />
+
+        <app-group-list [groups]="groups" (onAction)="archiveGroup($event)"></app-group-list>
+
+
+    </section>
+
+    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف الختمات</a>
+
+    <hr style="margin-bottom:32px" />
+
+
+
+    <p>
+
+        <!-- يتيح ختمة.نت إنشاء وإدارة مجموعات لختم القرآن الكريم بشكل جماعي. حيث يمكن بسهولة إنشاء مجموعة ختمة جديدة ثمّ
+        دعوة أعضاء المجموعة للإنضمام ومتابعة تقدّم الختمة بشكل مباشر ومتاح للجميع. -->
+
+        ختمة.نت هو تطبيق يتيح قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع أجزاء
+        المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.
+
+    </p>
+
+
+    <p>
+
+        أنشئوا مجموعتكم الآن ولا تنسونا من
+        دعائكم إن شاء الله.
+
+    </p>
+
+
+    <div>
+
+        <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
+            [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
+            دوريّة</a>
+
+        <!-- <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
+            [queryParams]="{type: 'onetime'}" style="background-color: #16769a!important;">بدء ختمة جماعيّة لمرّة
+            واحدة </a> -->
+
+
+    </div>
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,81 @@
+<section>
+    <header>
+
+        {{isRecurring ? "مجموعة ختمة دوريّة" : "ختمة جماعيّة لمرّة واحدة"}}
+
+
+    </header>
+
+    <div class="center-center multi-choice" *ngIf="!typeParam">
+
+        <mat-button-toggle-group [(ngModel)]="isRecurring">
+
+            <mat-button-toggle [value]="true">
+                <label class="center-center">
+                    <mat-icon>loop</mat-icon> <span>ختمة دوريّة</span>
+                </label>
+            </mat-button-toggle>
+
+            <mat-button-toggle [value]="false">
+                <label class="center-center">
+                    <mat-icon>looks_one</mat-icon> <span> ختمة لمرّة واحدة</span>
+                </label>
+            </mat-button-toggle>
+
+        </mat-button-toggle-group>
+
+
+    </div>
+
+    <p *ngIf="isRecurring"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
+        غير
+        ثابتة.
+
+        في حال كانت لديكم مجموعة ختمة جماعيّة عبر الوتسأب مثلا فإنّ إنشاء مجموعة عبر ختمة.نت سيريحكم ويسهّل عملكم بشكل
+        كبير
+        إن شاء الله.
+    </p>
+
+    <p *ngIf="!isRecurring">
+        مناسب للختمات العائليّة عن
+        أرواح
+        الموتى (رحمهم الله) أو في بيوت العزاء أو ختمات خلال المناسبات والنشاطات المختلفة. </p>
+
+
+
+    <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
+
+        <h2>تفاصيل الختمة</h2>
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>عنوان الختمة</mat-label>
+            <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>اسمك (مسؤول الختمة)</mat-label>
+            <input matInput [(ngModel)]="author" name="author" required="true" autocomplete="off">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>نص إضافي (اختياري)</mat-label>
+            <textarea rows="4" matInput [(ngModel)]="description" name="description"></textarea>
+        </mat-form-field>
+
+
+
+        <button type="submit" class="block large action-btn" mat-raised-button
+            color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">
+
+
+            {{isRecurring ? "إنشاء مجموعة الختمة" : "إنشاء الختمة الجماعيّة"}}
+
+
+
+        </button>
+
+    </form>
+
+
+</section>

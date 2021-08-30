@@ -1,0 +1,158 @@
+@import "~src/_variables";
+
+:host {
+  padding-bottom: 80px;
+}
+
+.spacer {
+  height: 64px;
+}
+
+.dashboard-header {
+  margin: -32px -32px 0;
+  padding: 16px;
+  background: $primary-color;
+
+  color: white;
+
+  // clip-path: circle(71.8% at 50% 17%);
+
+  .admin-section {
+    margin: 0;
+    opacity: 0.5;
+    padding: 10px;
+  }
+}
+
+.khitma-info {
+  padding: 0;
+
+  .title {
+    padding: 0;
+    margin-top: 16px;
+    margin-bottom: 24px !important;
+  }
+}
+
+.space {
+  height: 48px;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: lighten($primary-color, 20%);
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: $primary-color;
+}
+
+.admin-actions {
+  button {
+    margin-bottom: 16px;
+  }
+}
+
+.user-msg {
+  span {
+    display: block;
+    margin: 8px auto;
+  }
+}
+
+.group-container {
+  > * {
+    display: block;
+    margin: 32px auto;
+  }
+}
+
+.group-options-menu-button {
+  position: fixed;
+  color: white;
+  left: 42px;
+  top: 0;
+  top: 8px;
+}
+
+mat-panel-title {
+  mat-icon {
+    margin-inline-start: 4px;
+  }
+}
+
+.admin-tools {
+  margin: 0 -32px 32px;
+
+  .mat-expansion-panel {
+    border-radius: 0 !important;
+  }
+
+  mat-expansion-panel-header {
+    background: $admin-color !important;
+
+    .mat-expansion-panel-header-title {
+      color: white !important;
+    }
+
+    .mat-expansion-indicator::after {
+      color: rgba(255, 255, 255, 0.54);
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px 32px;
+  }
+
+  // mat-expansion-panel-header mat-icon {
+  //   color: gold;
+  // }
+
+  mat-icon {
+    margin-left: 8px;
+    // opacity: 0.5;
+  }
+
+  button {
+    display: block;
+    margin: 16px auto;
+    padding: 0 16px;
+    width: 100%;
+    background: $admin-action-color;
+    color: white;
+    font-size: larger;
+    text-align: right;
+    line-height: 64px;
+  }
+}
+
+.admin-action-btn {
+  display: block;
+  margin: 16px auto;
+  padding: 0 16px;
+  width: 100%;
+  background: $admin-action-color;
+  color: white;
+  font-size: larger;
+  text-align: right;
+  line-height: 64px;
+
+  mat-icon {
+    margin-left: 8px;
+  }
+}
+
+.admin-notes {
+  hr {
+    margin: 32px 0 16px 0;
+  }
+
+  mat-icon {
+    margin: 0 4px;
+    transform: translate(0, 6px);
+    zoom: 0.75;
+  }
+}
+
+.admin-action-btn {
+  background: $admin-action-color !important;
+}
