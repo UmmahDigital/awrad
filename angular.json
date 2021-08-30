@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "khitma": {
+    "awrad": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/khitma",
+            "outputPath": "dist/awrad",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,18 +73,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "khitma:build"
+            "browserTarget": "awrad:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "khitma:build:production"
+              "browserTarget": "awrad:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "khitma:build"
+            "browserTarget": "awrad:build"
           }
         },
         "test": {
@@ -123,11 +123,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "khitma:serve"
+            "devServerTarget": "awrad:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "khitma:serve:production"
+              "devServerTarget": "awrad:serve:production"
             }
           }
         },
@@ -138,5 +138,5 @@
       }
     }
   },
-  "defaultProject": "khitma"
+  "defaultProject": "awrad"
 }

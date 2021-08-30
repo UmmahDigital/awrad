@@ -17,7 +17,7 @@ export class GetComponent implements OnInit {
 
       IOS: "https://apps.apple.com/us/app/%D8%AE%D8%AA%D9%85%D8%A9-%D9%86%D8%AA/id1557122268",
       ANDROID: "https://play.google.com/store/apps/details?id=digital.ummah.khitma",
-      WEB: "https://khitma.net",
+      WEB: "https://awrad.app",
     };
 
     if (navigator.userAgent.toLowerCase().includes("iphone")) {
