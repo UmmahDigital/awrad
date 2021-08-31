@@ -44,7 +44,7 @@ import { TestComponent } from './test/test.component';
 import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
 import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
 import { AboutComponent } from './pages/about/about.component';
-import { EditKhitmaDetailsComponent } from './dialog/edit-group-details/edit-khitma-details.component';
+import { EditGroupDetailsComponent } from './dialog/edit-group-details/edit-group-details.component';
 
 import { GroupJoinedGuard } from './group.routeguard';
 import { GroupService } from './group.service';
@@ -111,7 +111,7 @@ const routes: Routes = [
     QuranBrowserComponent,
     DashboardComponent,
     AboutComponent,
-    EditKhitmaDetailsComponent,
+    EditGroupDetailsComponent,
     QuranComponent,
     GetComponent,
     PopMenuComponent,
