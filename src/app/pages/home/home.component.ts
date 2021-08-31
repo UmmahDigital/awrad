@@ -2,10 +2,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup, KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { Group, GROUP_TYPE } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
-import { KhitmaGroupService } from '../../khitma-group.service';
+import { GroupService } from '../../group.service';
 
 @Component({
   selector: 'app-home',
@@ -16,11 +16,11 @@ import { KhitmaGroupService } from '../../khitma-group.service';
 })
 export class HomeComponent implements OnInit {
 
-  groups: KhitmaGroup[];
+  groups: Group[];
 
   isShowArchive: boolean;
 
-  constructor(private router: Router, private groupsApi: KhitmaGroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
+  constructor(private router: Router, private groupsApi: GroupService, private localDB: LocalDatabaseService, private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService) { }
 
   ngOnInit(): void {
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
           return;
         }
 
-        this.groups = <KhitmaGroup[]>groups;
+        this.groups = <Group[]>groups;
 
       });
 
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  archiveGroup(group: KhitmaGroup) {
+  archiveGroup(group: Group) {
 
 
     const dialogData = new ConfirmDialogModel(

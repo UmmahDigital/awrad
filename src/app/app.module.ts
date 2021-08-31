@@ -29,7 +29,7 @@ import { GroupJoinComponent } from './pages/group/group-join/group-join.componen
 
 
 import { environment } from '../environments/environment';
-import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component';
+import { GroupInfoComponent } from './shared/group-info/group-info.component';
 
 import { GroupListComponent } from './shared/group-list/group-list.component';
 import { GroupListItemComponent } from './shared/group-list/group-list-item/group-list-item.component';
@@ -41,22 +41,19 @@ import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { TestComponent } from './test/test.component';
-import { KhitmaDoneCelebrationComponent } from './shared/khitma-done-celebration/khitma-done-celebration.component';
 import { QuranBrowserComponent } from './shared/quran-browser/quran-browser.component';
 import { DashboardComponent } from './pages/me/dashboard/dashboard.component';
 import { AboutComponent } from './pages/about/about.component';
-import { EditKhitmaDetailsComponent } from './dialog/edit-khitma-details/edit-khitma-details.component';
-import { StartNewKhitmaComponent } from './dialog/start-new-khitma/start-new-khitma.component';
+import { EditKhitmaDetailsComponent } from './dialog/edit-group-details/edit-khitma-details.component';
 
 import { GroupJoinedGuard } from './group.routeguard';
-import { KhitmaGroupService } from './khitma-group.service';
+import { GroupService } from './group.service';
 import { QuranComponent } from './pages/quran/quran.component';
 import { GetComponent } from './pages/get/get.component';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
-import { KhitmaProgressComponent } from './shared/khitma-progress/khitma-progress.component';
+import { GroupProgressComponent } from './shared/group-progress/group-progress.component';
 import { CommonModule } from '@angular/common';
 import { MoonComponent } from './shared/moon/moon.component';
-import { GlassButtonComponent } from './shared/glass-button/glass-button.component';
 import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
 import { NewTaskComponent } from './dialog/new-task/new-task.component';
@@ -103,7 +100,7 @@ const routes: Routes = [
     GroupComponent,
     GroupInviteComponent,
     GroupJoinComponent,
-    KhitmaInfoComponent,
+    GroupInfoComponent,
     GroupDashboardComponent,
     GroupListComponent,
     GroupListItemComponent,
@@ -111,18 +108,15 @@ const routes: Routes = [
     CelebrationComponent,
     ArchiveComponent,
     TestComponent,
-    KhitmaDoneCelebrationComponent,
     QuranBrowserComponent,
     DashboardComponent,
     AboutComponent,
     EditKhitmaDetailsComponent,
-    StartNewKhitmaComponent,
     QuranComponent,
     GetComponent,
     PopMenuComponent,
-    KhitmaProgressComponent,
+    GroupProgressComponent,
     MoonComponent,
-    GlassButtonComponent,
     TodoComponent,
     GroupMembersComponent,
     NewTaskComponent,
@@ -144,7 +138,7 @@ const routes: Routes = [
     AngularFireStorageModule, // storage,
     NgxGoogleAnalyticsModule.forRoot(environment.firebaseConfig.measurementId), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [GroupJoinedGuard, KhitmaGroupService],
+  providers: [GroupJoinedGuard, GroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,7 +5,7 @@
 
 
 
-    <img class="logo" src="assets/khitma-logo.png" alt="logo of khitmah" />
+    <img class="logo" src="assets/awrad-logo.png" alt="logo of awrad" />
 
 
     <section *ngIf="groups">
@@ -17,7 +17,7 @@
 
     </section>
 
-    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف الختمات</a>
+    <a *ngIf="isShowArchive" mat-button class="block" routerLink="me/groups/archive">أرشيف المجوعات</a>
 
     <hr style="margin-bottom:32px" />
 
@@ -25,13 +25,9 @@
 
     <p>
 
-        <!-- يتيح منصّة أوراد إنشاء وإدارة مجموعات لختم القرآن الكريم بشكل جماعي. حيث يمكن بسهولة إنشاء مجموعة ختمة جديدة ثمّ
-        دعوة أعضاء المجموعة للإنضمام ومتابعة تقدّم الختمة بشكل مباشر ومتاح للجميع. -->
-
-        منصّة أوراد هو تطبيق يتيح قراءة وختم القرآن الكريم بشكل جماعي، وذلك عن طريق إنشاء مجموعات لختم القرآن وتوزيع
-        أجزاء
-        المصحف على الأعضاء بطريقة سلسلة، ثمّ متابعة تقدّم الختمة بشكل مريح ومتاح لجميع المشتركين في مجموعتك.
-
+        أوراد هي منصّة تقنيّة تتيح تنفيذ الأوراد الإسلاميّة بشكل جامعي، وذلك عن طريق إنشاء مجموعات للأوراد المشتركة
+        (لأصدقائك أو عائلتك مثلا) ثمّ مشاركة الأوراد ومتابعة تنفيذها من قبل أعضاء المجموعة بشكل سلس ومتاح لجميع أعضاء
+        المجموعة.
     </p>
 
 
@@ -46,13 +42,8 @@
     <div>
 
         <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
-            [queryParams]="{type: 'recurring'}">إنشاء مجموعة ختمة
-            دوريّة</a>
-
-        <!-- <a mat-raised-button color="accent" class="block large action-btn" routerLink="/new"
-            [queryParams]="{type: 'onetime'}" style="background-color: #16769a!important;">بدء ختمة جماعيّة لمرّة
-            واحدة </a> -->
-
+            [queryParams]="{type: 'recurring'}">إنشاء مجموعة
+            جديدة</a>
 
     </div>
 

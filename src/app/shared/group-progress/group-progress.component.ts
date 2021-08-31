@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-khitma-progress',
-  templateUrl: './khitma-progress.component.html',
-  styleUrls: ['./khitma-progress.component.scss']
+  selector: 'app-group-progress',
+  templateUrl: './group-progress.component.html',
+  styleUrls: ['./group-progress.component.scss']
 })
-export class KhitmaProgressComponent implements OnInit {
+export class GroupProgressComponent implements OnInit {
 
   @Input() target: number;
   @Input() current: number;

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { KhitmaGroupService } from './khitma-group.service';
+import { GroupService } from './group.service';
 
-describe('KhitmaGroupService', () => {
-  let service: KhitmaGroupService;
+describe('GroupService', () => {
+  let service: GroupService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(KhitmaGroupService);
+    service = TestBed.inject(GroupService);
   });
 
   it('should be created', () => {

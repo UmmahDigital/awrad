@@ -1,8 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask } from 'src/app/entities/entities';
-import { KhitmaGroupService } from '../../../khitma-group.service';
+import { Group, GROUP_TYPE, Group_SameTask } from 'src/app/entities/entities';
+import { GroupService } from '../../../group.service';
 import { LocalDatabaseService } from '../../../local-database.service';
 
 @Component({
@@ -12,12 +12,12 @@ import { LocalDatabaseService } from '../../../local-database.service';
 })
 export class GroupJoinComponent implements OnInit {
 
-  group: KhitmaGroup;
+  group: Group;
   inviteLink: string;
   username: string;
 
   constructor(
-    private groupsApi: KhitmaGroupService,
+    private groupsApi: GroupService,
     private localDB: LocalDatabaseService,
     private $gaService: GoogleAnalyticsService,
     private router: Router,
@@ -27,7 +27,7 @@ export class GroupJoinComponent implements OnInit {
   ngOnInit() {
 
     this.groupsApi.getCurrentGroup().subscribe(
-      (value: KhitmaGroup) => this.group = value
+      (value: Group) => this.group = value
     )
 
   }
@@ -36,7 +36,7 @@ export class GroupJoinComponent implements OnInit {
 
     this.$gaService.event('group_joined');
 
-    let username = KhitmaGroup.refineOwnerName(this.username);
+    let username = Group.refineOwnerName(this.username);
 
     this.localDB.joinGroup(this.group.id, username);
 

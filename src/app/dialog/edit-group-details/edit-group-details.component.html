@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-    تعديل تفاصيل الختمة
+    تعديل تفاصيل المجموعة
 </h1>
 
 <form (ngSubmit)="onConfirm()" #editGroupForm="ngForm">
@@ -10,7 +10,7 @@
 
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>عنوان الختمة</mat-label>
+            <mat-label>عنوان المجموعة</mat-label>
             <input matInput [(ngModel)]="group.title" name="title" required="true" autocomplete="off">
         </mat-form-field>
 

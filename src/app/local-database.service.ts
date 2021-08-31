@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, NUM_OF_AJZA } from './entities/entities';
+import { Group, NUM_OF_AJZA } from './entities/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +9,12 @@ export class LocalDatabaseService {
   groups: object; // groups = active gorups  // [todo]: watch and save() upon change?
   archivedGroups: object; // [todo]: watch and save() upon change?
 
-  personalKhitma: object;
-  myGlobalKhitmaAjza;
 
   constructor() {
 
     this.groups = JSON.parse(localStorage.getItem("groups")) || {};
 
     this.archivedGroups = JSON.parse(localStorage.getItem("archivedGroups")) || {};
-
-    this.personalKhitma = JSON.parse(localStorage.getItem("personalKhitma")) || null;
-
-    this.myGlobalKhitmaAjza = JSON.parse(localStorage.getItem("myGlobalKhitmaAjza")) || null;
 
 
   }
@@ -74,15 +68,15 @@ export class LocalDatabaseService {
     return this.groups;
   }
 
-  getMyKhitmaCycle(groupId) {
-    return this.groups[groupId].cycle;
-  }
+  // getMyGroupCycle(groupId) {
+  //   return this.groups[groupId].cycle;
+  // }
 
   getMyGroups() {
     return Object.keys(this.groups).sort(this._byDateSorter);
   }
 
-  archiveGroup(group: KhitmaGroup) {
+  archiveGroup(group: Group) {
 
     this.archivedGroups[group.id] = {
       id: group.id,

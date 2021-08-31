@@ -3,15 +3,7 @@ export const NUM_OF_AJZA = 30;
 export const NUM_OF_PAGES = 604;
 
 
-
-export const KHITMA_CYCLE_TYPE = Object.freeze({
-    AUTO_BOOK: 1,
-    ALL_IDLE: 2,
-
-});
-
-
-export const KHITMA_GROUP_TYPE = Object.freeze({
+export const GROUP_TYPE = Object.freeze({
     SAME_TASK: 'SAME_TASK',
 });
 
@@ -33,7 +25,7 @@ export function GET_JUZ_READ_EXTERNAL_URL(juzIndex: number): string {
 
 
 
-export class KhitmaGroup {
+export class Group {
     id?: string;
     title?: string;
     description?: string;
@@ -44,7 +36,7 @@ export class KhitmaGroup {
     admins?: string;
     type?: string;
 
-    public constructor(init?: Partial<KhitmaGroup>) {
+    public constructor(init?: Partial<Group>) {
         Object.assign(this, init);
         this.cycle = init.cycle || 0;
     }
@@ -65,12 +57,12 @@ export class KhitmaGroup {
 
 
 
-export class KhitmaGroup_SameTask extends KhitmaGroup {
+export class Group_SameTask extends Group {
     task: string;
     members: GroupMember[];
     totalDoneTasks: number;
 
-    public constructor(init?: Partial<KhitmaGroup_SameTask>) {
+    public constructor(init?: Partial<Group_SameTask>) {
         super(init);
         this.members = this._createMembersArray(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 

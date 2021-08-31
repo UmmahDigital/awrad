@@ -6,8 +6,8 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/alert.service';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
-import { GroupMember, KhitmaGroup_SameTask } from 'src/app/entities/entities';
-import { KhitmaGroupService } from 'src/app/khitma-group.service';
+import { GroupMember, Group_SameTask } from 'src/app/entities/entities';
+import { GroupService } from 'src/app/khitma-group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { NativeApiService } from 'src/app/native-api.service';
 import { NativeShareService } from 'src/app/native-share.service';
@@ -20,8 +20,8 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confi
 })
 export class Group_SameTask_Component implements OnInit, OnChanges {
 
-  @Input() group: KhitmaGroup_SameTask;
-  @Input() groupWatch$: Subject<KhitmaGroup_SameTask>;
+  @Input() group: Group_SameTask;
+  @Input() groupWatch$: Subject<Group_SameTask>;
   @Input() userWatch$?: Subject<string>;
 
   @Input() isAdmin: boolean;
@@ -36,7 +36,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
   counts;
   totalDoneTasks;
 
-  constructor(private groupsApi: KhitmaGroupService,
+  constructor(private groupsApi: GroupService,
     private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
@@ -70,14 +70,14 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
       this.onAchievement.emit();
     }
 
-    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', (<KhitmaGroup_SameTask>this.group).task);
+    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', (<Group_SameTask>this.group).task);
 
   }
 
 
   updateTask(newTask) {
 
-    let tmpGroup = (<KhitmaGroup_SameTask>this.group);
+    let tmpGroup = (<Group_SameTask>this.group);
     tmpGroup.resetMembersTaskStatus();
 
     let membersObj = tmpGroup.getMembersObj();
@@ -99,7 +99,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
     this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
 
 
-    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<KhitmaGroup_SameTask>this.group).task);
+    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<Group_SameTask>this.group).task);
 
 
   }

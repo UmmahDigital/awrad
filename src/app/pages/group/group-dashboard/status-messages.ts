@@ -1,4 +1,4 @@
-import { KHITMA_GROUP_TYPE } from "src/app/entities/entities";
+import { GROUP_TYPE } from "src/app/entities/entities";
 
 
 function _getDateInArabic(date: Date) {
@@ -57,7 +57,7 @@ function statusMsg_SameTask(group) {
 }
 
 let _StatusMessages = {};
-_StatusMessages[KHITMA_GROUP_TYPE.SAME_TASK] = statusMsg_SameTask;
+_StatusMessages[GROUP_TYPE.SAME_TASK] = statusMsg_SameTask;
 
 
 export const StatusMessageGenerators = _StatusMessages;

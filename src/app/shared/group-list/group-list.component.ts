@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { KhitmaGroup } from '../../entities/entities';
-import { KhitmaGroupService } from '../../khitma-group.service';
+import { Group } from '../../entities/entities';
+import { GroupService } from '../../khitma-group.service';
 import { LocalDatabaseService } from '../../local-database.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { LocalDatabaseService } from '../../local-database.service';
 })
 export class GroupListComponent implements OnInit {
 
-  @Input() groups: KhitmaGroup[];
+  @Input() groups: Group[];
   @Output() onAction = new EventEmitter<object>();
 
   showSettings: boolean = false;

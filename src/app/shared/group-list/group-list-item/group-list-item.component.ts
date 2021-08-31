@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { KhitmaGroupService } from '../../../../app/khitma-group.service';
+import { GroupService } from '../../../../app/khitma-group.service';
 import { GroupMember } from '../../../entities/entities';
 
 @Component({
@@ -15,7 +15,7 @@ export class GroupListItemComponent implements OnInit {
 
   progress;
 
-  constructor(private groupsApi: KhitmaGroupService) { }
+  constructor(private groupsApi: GroupService) { }
 
   ngOnInit(): void {
     this.progress = this.calcProgress_SameTask();

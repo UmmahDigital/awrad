@@ -2,10 +2,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KhitmaGroup } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
-import { KhitmaGroupService } from '../../khitma-group.service';
+import { GroupService } from '../../khitma-group.service';
 
 @Component({
   selector: 'app-archive',
@@ -17,7 +17,7 @@ export class ArchiveComponent implements OnInit {
   archivedGroups;
 
 
-  constructor(private dialog: MatDialog, private localDB: LocalDatabaseService, private groupsApi: KhitmaGroupService,) {
+  constructor(private dialog: MatDialog, private localDB: LocalDatabaseService, private groupsApi: GroupService,) {
   }
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class ArchiveComponent implements OnInit {
 
   }
 
-  clearArchive(group: KhitmaGroup) {
+  clearArchive(group: Group) {
 
     const dialogData = new ConfirmDialogModel(
       "تأكيد تنظيف الأرشيف",

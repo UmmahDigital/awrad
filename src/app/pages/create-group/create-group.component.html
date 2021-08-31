@@ -1,60 +1,34 @@
 <section>
     <header>
 
-        {{isRecurring ? "مجموعة ختمة دوريّة" : "ختمة جماعيّة لمرّة واحدة"}}
-
+        مجموعة جديدة
 
     </header>
 
-    <div class="center-center multi-choice" *ngIf="!typeParam">
 
-        <mat-button-toggle-group [(ngModel)]="isRecurring">
-
-            <mat-button-toggle [value]="true">
-                <label class="center-center">
-                    <mat-icon>loop</mat-icon> <span>ختمة دوريّة</span>
-                </label>
-            </mat-button-toggle>
-
-            <mat-button-toggle [value]="false">
-                <label class="center-center">
-                    <mat-icon>looks_one</mat-icon> <span> ختمة لمرّة واحدة</span>
-                </label>
-            </mat-button-toggle>
-
-        </mat-button-toggle-group>
-
-
-    </div>
-
-    <p *ngIf="isRecurring"> مناسب للمجموعات التي تختم القرآن سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
+    <p>
+        مناسب للمجموعات التي تتعاون على الأوراد سويّا بشكل دوري، حتّى لو كان ذلك بوتيرة
         غير
         ثابتة.
 
-        في حال كانت لديكم مجموعة ختمة جماعيّة عبر الوتسأب مثلا فإنّ إنشاء مجموعة عبر منصّة أوراد سيريحكم ويسهّل عملكم
+        في حال كانت لديكم مجموعة أوراد جماعيّة عبر الوتسأب مثلا فإنّ إنشاء مجموعة عبر منصّة أوراد سيريحكم ويسهّل عملكم
         بشكل
         كبير
         إن شاء الله.
     </p>
 
-    <p *ngIf="!isRecurring">
-        مناسب للختمات العائليّة عن
-        أرواح
-        الموتى (رحمهم الله) أو في بيوت العزاء أو ختمات خلال المناسبات والنشاطات المختلفة. </p>
-
-
 
     <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
 
-        <h2>تفاصيل الختمة</h2>
+        <h2>تفاصيل المجموعة</h2>
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>عنوان الختمة</mat-label>
+            <mat-label>عنوان المجموعة</mat-label>
             <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="block">
-            <mat-label>اسمك (مسؤول الختمة)</mat-label>
+            <mat-label>اسمك (مسؤول المجموعة)</mat-label>
             <input matInput [(ngModel)]="author" name="author" required="true" autocomplete="off">
         </mat-form-field>
 
@@ -70,7 +44,7 @@
             color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">
 
 
-            {{isRecurring ? "إنشاء مجموعة الختمة" : "إنشاء الختمة الجماعيّة"}}
+            إنشاء المجموعة
 
 
 

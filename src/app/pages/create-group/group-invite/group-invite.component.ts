@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'src/app/alert.service';
-import { KhitmaGroup } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/entities';
 import { NativeApiService } from 'src/app/native-api.service';
 import { NativeShareService } from 'src/app/native-share.service';
-import { KhitmaGroupService } from '../../../khitma-group.service';
+import { GroupService } from '../../../khitma-group.service';
 
 
 @Component({
@@ -15,12 +15,12 @@ import { KhitmaGroupService } from '../../../khitma-group.service';
 })
 export class GroupInviteComponent implements OnInit {
 
-  group: KhitmaGroup;
+  group: Group;
   inviteLink: string;
   inviteMsg: string;
 
   constructor(private route: ActivatedRoute,
-    private groupsApi: KhitmaGroupService,
+    private groupsApi: GroupService,
     private alert: AlertService,
     private nativeShare: NativeShareService,
     private nativeApi: NativeApiService) { }
@@ -32,7 +32,7 @@ export class GroupInviteComponent implements OnInit {
 
         const groupId = params.groupId;
 
-        this.groupsApi.getGroupDetailsOnce(groupId).subscribe((group: KhitmaGroup) => {
+        this.groupsApi.getGroupDetailsOnce(groupId).subscribe((group: Group) => {
           this.group = group;
 
           this.inviteLink = this.groupsApi.getGroupURL(this.group.id);
@@ -57,7 +57,7 @@ export class GroupInviteComponent implements OnInit {
 
   share() {
 
-    this.nativeApi.share("دعوة للإنضمام لمجموعة الختمة", this.inviteMsg, null);
+    this.nativeApi.share("دعوة للإنضمام للمجموعة", this.inviteMsg, null);
 
   }
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { KhitmaGroup, KhitmaGroup_SameTask } from '../entities/entities';
+import { Group, Group_SameTask } from '../entities/entities';
 import { map, catchError, take, first } from 'rxjs/operators';
 
 // import * as firestore from "../../../node_modules/firebase";
-import { KhitmaGroupService } from '../khitma-group.service';
+import { GroupService } from '../khitma-group.service';
 
 
 import * as firebase from 'firebase/app';
@@ -19,7 +19,7 @@ import 'firebase/firestore';
 })
 export class TestComponent implements OnInit {
 
-  constructor(private db: AngularFirestore, private groupsApi: KhitmaGroupService) { }
+  constructor(private db: AngularFirestore, private groupsApi: GroupService) { }
 
   ngOnInit(): void {
   }
@@ -34,13 +34,13 @@ export class TestComponent implements OnInit {
         owner: "hasan" + (i + 1)
       };
 
-      this.db.doc<KhitmaGroup>('groups/O5Nd5fcQ9Kx59aYTrGPp').update(updatedObj);
+      this.db.doc<Group>('groups/O5Nd5fcQ9Kx59aYTrGPp').update(updatedObj);
 
     }
 
 
 
-    // this.db.doc<SameTaskKhitmaGroup>('groups/JQQVZKetquaDjvtDhFvj').update({ "task": "مهمة جديدة" });
+    // this.db.doc<SameTaskGroup>('groups/JQQVZKetquaDjvtDhFvj').update({ "task": "مهمة جديدة" });
 
 
     // *****
@@ -51,7 +51,7 @@ export class TestComponent implements OnInit {
     //   isTaskDone: false
     // };
 
-    // this.db.doc<KhitmaGroup>('groups/' + "JQQVZKetquaDjvtDhFvj").update(updatedObj);
+    // this.db.doc<Group>('groups/' + "JQQVZKetquaDjvtDhFvj").update(updatedObj);
 
 
 

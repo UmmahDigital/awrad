@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask } from 'src/app/entities/entities';
+import { Group, GROUP_TYPE, Group_SameTask } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
-import { KhitmaGroupService } from '../../../khitma-group.service';
+import { GroupService } from '../../../group.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
@@ -11,7 +11,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from 'src/app/alert.service';
 import { NativeApiService } from 'src/app/native-api.service';
-import { EditKhitmaDetailsComponent } from 'src/app/dialog/edit-khitma-details/edit-khitma-details.component';
+import { EditGroupDetailsComponent } from 'src/app/dialog/edit-group-details/edit-group-details.component';
 import { Router } from '@angular/router';
 import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
@@ -29,9 +29,9 @@ export class GroupDashboardComponent implements OnInit {
   @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
 
 
-  readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
+  readonly GROUP_TYPE = GROUP_TYPE;
 
-  group;// : KhitmaGroup_Sequential | KhitmaGroup_SameTask;
+  group;// : Group_Sequential | Group_SameTask;
 
 
   username: string;
@@ -45,7 +45,7 @@ export class GroupDashboardComponent implements OnInit {
   inviteMsg = "";
   statusMsg = "";
 
-  constructor(private groupsApi: KhitmaGroupService,
+  constructor(private groupsApi: GroupService,
     private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
@@ -57,7 +57,7 @@ export class GroupDashboardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.groupsApi.getCurrentGroup().subscribe((group: KhitmaGroup) => {
+    this.groupsApi.getCurrentGroup().subscribe((group: Group) => {
 
       this.titleService.setTitle(group.title);
 
@@ -66,8 +66,8 @@ export class GroupDashboardComponent implements OnInit {
         return;
       }
 
-      this.group = new KhitmaGroup_SameTask(group);
-      this.group.type = this.group.type || KHITMA_GROUP_TYPE.SAME_TASK;
+      this.group = new Group_SameTask(group);
+      this.group.type = this.group.type || GROUP_TYPE.SAME_TASK;
 
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);
@@ -84,7 +84,7 @@ export class GroupDashboardComponent implements OnInit {
 
   }
 
-  getKhitmaStatusMsg() {
+  getGroupStatusMsg() {
     return StatusMessageGenerators[this.group.type](this.group);
   }
 
@@ -98,7 +98,7 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   shareStatusMsg() {
-    this.nativeApi.share(("وضع الختمة: " + this.group.title), this.getKhitmaStatusMsg(), null);
+    this.nativeApi.share(("وضع المجموعة: " + this.group.title), this.getGroupStatusMsg(), null);
   }
 
   shareInviteMsg() {
@@ -108,7 +108,7 @@ export class GroupDashboardComponent implements OnInit {
 
   showEditGroupDialog() {
 
-    const dialogRef = this.dialog.open(EditKhitmaDetailsComponent, {
+    const dialogRef = this.dialog.open(EditGroupDetailsComponent, {
       data: {
         title: this.group.title,
         author: this.group.author,
@@ -158,7 +158,7 @@ export class GroupDashboardComponent implements OnInit {
 
         this.localDB.archiveGroup(this.group);
 
-        if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK) {
+        if (this.group.type === GROUP_TYPE.SAME_TASK) {
           this.groupsApi.removeGroupMember(this.group.id, this.username).then(() => {
             this.router.navigate(['/']);
 

@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroupService } from '../../khitma-group.service';
+import { GroupService } from '../../group.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { KHITMA_GROUP_TYPE } from 'src/app/entities/entities';
+import { GROUP_TYPE } from 'src/app/entities/entities';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -27,12 +27,12 @@ export class CreateGroupComponent implements OnInit {
 
   typeParam: string;
 
-  readonly KHITMA_GROUP_TYPE = KHITMA_GROUP_TYPE;
-  groupType = KHITMA_GROUP_TYPE.SAME_TASK;
+  readonly GROUP_TYPE = GROUP_TYPE;
+  groupType = GROUP_TYPE.SAME_TASK;
   isRecurring = true;
 
   constructor(private $gaService: GoogleAnalyticsService,
-    private groupsApi: KhitmaGroupService,
+    private groupsApi: GroupService,
     private router: Router,
     private alert: AlertService,
     private localDB: LocalDatabaseService,
@@ -47,7 +47,7 @@ export class CreateGroupComponent implements OnInit {
         return;
       }
 
-      this.groupType = KHITMA_GROUP_TYPE.SAME_TASK;
+      this.groupType = GROUP_TYPE.SAME_TASK;
 
 
     });
@@ -57,7 +57,7 @@ export class CreateGroupComponent implements OnInit {
   createGroup() {
 
     // if (!this.isRecurring) {
-    //   this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL;
+    //   this.groupType = GROUP_TYPE.SEQUENTIAL;
     // }
 
     this.groupsApi.createGroup(this.title, this.description, this.author, this.groupType, this.firstTask).then(docRef => {
@@ -66,7 +66,7 @@ export class CreateGroupComponent implements OnInit {
 
       this.$gaService.event('group_created');
 
-      this.alert.show("تمّ إنشاء مجموعة الختمة بنجاح!", 5000);
+      this.alert.show("تمّ إنشاء مجموعة الأوراد بنجاح!", 5000);
 
 
       this.localDB.joinGroup(groupId, this.author);

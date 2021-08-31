@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, NUM_OF_AJZA, KHITMA_CYCLE_TYPE, KhitmaGroup_SameTask } from './entities/entities';
+import { Group, Group_SameTask } from './entities/entities';
 
-import { BehaviorSubject, Observable, of, Subject, throwError } from 'rxjs';
-import { map, catchError, take, first } from 'rxjs/operators';
-import { environment } from '../environments/environment';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { ThrowStmt } from '@angular/compiler';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { LocalDatabaseService } from './local-database.service';
 
 
@@ -18,10 +16,10 @@ import 'firebase/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class KhitmaGroupService {
+export class GroupService {
 
   private _currentGroup = new Subject();
-  private _currentGroupObj: KhitmaGroup = null;
+  private _currentGroupObj: Group = null;
 
   private groupsDocs: object = {}; // save references of queried groups
 
@@ -29,8 +27,8 @@ export class KhitmaGroupService {
 
   constructor(private db: AngularFirestore, private localDB: LocalDatabaseService,) { }
 
-  public getGroupDetailsOnce(groupId: string): Observable<KhitmaGroup> {
-    this.groupsDocs[groupId] = this.db.doc<KhitmaGroup>('groups/' + groupId);
+  public getGroupDetailsOnce(groupId: string): Observable<Group> {
+    this.groupsDocs[groupId] = this.db.doc<Group>('groups/' + groupId);
     return this.groupsDocs[groupId].get().pipe(map(res => {
       const data = (<any>res).data();
       const id = (<any>res).id;
@@ -40,7 +38,7 @@ export class KhitmaGroupService {
 
   public setCurrentGroup(groupId: string) {
 
-    this.groupsDocs[groupId] = this.db.doc<any>('groups/' + groupId); // any should be `KhitmaGroup` after change stabilyzes 
+    this.groupsDocs[groupId] = this.db.doc<any>('groups/' + groupId); // any should be `Group` after change stabilyzes 
 
     this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: any) => {
 
@@ -88,7 +86,7 @@ export class KhitmaGroupService {
     return location.origin + '/group/' + groupId;
   }
 
-  public isValidGroup(group: KhitmaGroup) {
+  public isValidGroup(group: Group) {
 
     return group && group.title ? true : false;
   }
@@ -96,7 +94,7 @@ export class KhitmaGroupService {
 
   public updateGroupInfo(groupId, title, description, targetDate, admins) {
 
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update({
+    this.db.doc<Group>('groups/' + groupId).update({
       title: title,
       description: description || "",
       targetDate: targetDate || "",
@@ -105,19 +103,15 @@ export class KhitmaGroupService {
 
   }
 
-  // ******** SEQUENTIAL KHITMA
-
 
   getGroups(groupsIds: string[]) {
     return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
   }
 
 
-  // ******** SAMETASK KHITMA
-
   updateGroupTask(groupId, newTask, currentCycle, resetedMembers) {
 
-    this.db.doc<KhitmaGroup_SameTask>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
+    this.db.doc<Group_SameTask>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
   }
 
 
@@ -129,7 +123,7 @@ export class KhitmaGroupService {
       "isTaskDone": false
     };
 
-    return this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    return this.db.doc<Group>('groups/' + groupId).update(updatedObj);
 
   }
 
@@ -152,7 +146,7 @@ export class KhitmaGroupService {
 
     updatedObj["totalDoneTasks"] = firebase.default.firestore.FieldValue.increment(isDone ? 1 : -1);
 
-    this.db.doc<KhitmaGroup>('groups/' + groupId).update(updatedObj);
+    this.db.doc<Group>('groups/' + groupId).update(updatedObj);
 
 
   }

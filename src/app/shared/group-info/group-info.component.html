@@ -1,0 +1,50 @@
+<section *ngIf="group" class="group-info">
+
+
+    <header class="title center-center" (click)="isExpanded = !isExpanded;">
+
+
+        <label>
+            {{group.title}}
+
+
+            <span class="group-cycle" *ngIf="group.cycle > 0">
+
+
+                (
+                <span *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+
+                    مهمّة
+                </span>
+
+                {{group.cycle + 1}}
+
+                )
+
+
+            </span>
+
+
+        </label>
+
+
+        <mat-icon>
+            {{isExpanded? "expand_less" : "expand_more"}}
+
+        </mat-icon>
+    </header>
+
+
+    <div *ngIf="isExpanded">
+        <label class="author"> مُنشئ المجموعة: {{group.author}} </label>
+
+        <p class="description">
+            {{group.description}}
+        </p>
+
+        <label *ngIf="showLink">{{groupLink}}</label>
+
+    </div>
+
+
+</section>

@@ -16,7 +16,7 @@ export class GetComponent implements OnInit {
     const APP_URLS = {
 
       IOS: "https://apps.apple.com/us/app/%D8%AE%D8%AA%D9%85%D8%A9-%D9%86%D8%AA/id1557122268",
-      ANDROID: "https://play.google.com/store/apps/details?id=digital.ummah.khitma",
+      ANDROID: "https://play.google.com/store/apps/details?id=digital.ummah.awrad",
       WEB: "https://awrad.app",
     };
 
