@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { GroupService } from '../../group.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from '../../alert.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { GROUP_TYPE } from 'src/app/entities/entities';
 import { switchMap } from 'rxjs/operators';
+import { GroupService } from 'src/app/group.service';
+import { AlertService } from 'src/app/alert.service';
 
 
 @Component({

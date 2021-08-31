@@ -2,8 +2,8 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Group, GROUP_TYPE, Group_SameTask } from 'src/app/entities/entities';
-import { GroupService } from '../../../group.service';
-import { LocalDatabaseService } from '../../../local-database.service';
+import { GroupService } from 'src/app/group.service';
+import { LocalDatabaseService } from 'src/app/local-database.service';
 
 @Component({
   selector: 'app-group-join',

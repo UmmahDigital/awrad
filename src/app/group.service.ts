@@ -23,7 +23,6 @@ export class GroupService {
 
   private groupsDocs: object = {}; // save references of queried groups
 
-  private _isV2Api = true;
 
   constructor(private db: AngularFirestore, private localDB: LocalDatabaseService,) { }
 

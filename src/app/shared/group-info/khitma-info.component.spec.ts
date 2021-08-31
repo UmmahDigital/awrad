@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KhitmaInfoComponent } from './khitma-info.component';
+import { GroupInfoComponent } from './group-info.component';
 
-describe('KhitmaInfoComponent', () => {
-  let component: KhitmaInfoComponent;
-  let fixture: ComponentFixture<KhitmaInfoComponent>;
+describe('GroupInfoComponent', () => {
+  let component: GroupInfoComponent;
+  let fixture: ComponentFixture<GroupInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KhitmaInfoComponent ]
+      declarations: [GroupInfoComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KhitmaInfoComponent);
+    fixture = TestBed.createComponent(GroupInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

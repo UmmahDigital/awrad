@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Group, GROUP_TYPE } from 'src/app/entities/entities';
+import { GroupService } from 'src/app/group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
-import { GroupService } from '../../group.service';
 
 @Component({
   selector: 'app-home',

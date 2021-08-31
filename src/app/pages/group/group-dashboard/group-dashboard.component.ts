@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Group, GROUP_TYPE, Group_SameTask } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
-import { GroupService } from '../../../group.service';
 
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
@@ -16,6 +14,8 @@ import { Router } from '@angular/router';
 import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
+import { GroupService } from 'src/app/group.service';
+import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 
 @Component({

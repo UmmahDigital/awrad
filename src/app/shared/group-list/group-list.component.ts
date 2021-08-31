@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Group } from '../../entities/entities';
-import { GroupService } from '../../khitma-group.service';
-import { LocalDatabaseService } from '../../local-database.service';
+import { Group } from 'src/app/entities/entities';
+
 
 @Component({
   selector: 'app-group-list',

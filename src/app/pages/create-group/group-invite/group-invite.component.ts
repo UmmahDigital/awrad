@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlertService } from 'src/app/alert.service';
 import { Group } from 'src/app/entities/entities';
+import { GroupService } from 'src/app/group.service';
 import { NativeApiService } from 'src/app/native-api.service';
 import { NativeShareService } from 'src/app/native-share.service';
-import { GroupService } from '../../../khitma-group.service';
 
 
 @Component({

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GroupService } from '../../../../app/khitma-group.service';
-import { GroupMember } from '../../../entities/entities';
+import { GroupMember } from 'src/app/entities/entities';
+import { GroupService } from 'src/app/group.service';
+
 
 @Component({
   selector: 'app-group-list-item',

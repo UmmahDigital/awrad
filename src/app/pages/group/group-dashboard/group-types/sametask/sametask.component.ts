@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/alert.service';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { GroupMember, Group_SameTask } from 'src/app/entities/entities';
-import { GroupService } from 'src/app/khitma-group.service';
+import { GroupService } from 'src/app/group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { NativeApiService } from 'src/app/native-api.service';
 import { NativeShareService } from 'src/app/native-share.service';

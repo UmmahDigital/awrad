@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KhitmaProgressComponent } from './khitma-progress.component';
+import { GroupProgressComponent } from './group-progress.component';
 
-describe('KhitmaProgressComponent', () => {
-  let component: KhitmaProgressComponent;
-  let fixture: ComponentFixture<KhitmaProgressComponent>;
+describe('GroupProgressComponent', () => {
+  let component: GroupProgressComponent;
+  let fixture: ComponentFixture<GroupProgressComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KhitmaProgressComponent ]
+      declarations: [GroupProgressComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KhitmaProgressComponent);
+    fixture = TestBed.createComponent(GroupProgressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

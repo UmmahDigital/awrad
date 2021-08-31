@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Observable } from "rxjs";
 import { AlertService } from "./alert.service";
-import { GroupService } from "./khitma-group.service";
+import { GroupService } from "./group.service";
 import { LocalDatabaseService } from "./local-database.service";
 
 @Injectable()

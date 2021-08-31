@@ -5,7 +5,7 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Group } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
-import { GroupService } from '../../../khitma-group.service';
+import { GroupService } from '../../../group.service';
 
 @Component({
   selector: 'app-dashboard',
