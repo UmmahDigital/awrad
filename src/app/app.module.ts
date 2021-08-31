@@ -27,13 +27,10 @@ import { GroupComponent } from './pages/group/group.component';
 import { GroupDashboardComponent } from './pages/group/group-dashboard/group-dashboard.component';
 import { GroupJoinComponent } from './pages/group/group-join/group-join.component';
 
-import { JuzToggleComponent } from './shared/juz-toggle/juz-toggle.component';
-import { JuzListComponent } from './shared/juz-list/juz-list.component';
 
 import { environment } from '../environments/environment';
 import { KhitmaInfoComponent } from './shared/khitma-info/khitma-info.component';
-import { JuzComponent } from './shared/juz/juz.component';
-import { JuzGridComponent } from './shared/juz-grid/juz-grid.component';
+
 import { GroupListComponent } from './shared/group-list/group-list.component';
 import { GroupListItemComponent } from './shared/group-list/group-list-item/group-list-item.component';
 
@@ -55,7 +52,6 @@ import { GroupJoinedGuard } from './group.routeguard';
 import { KhitmaGroupService } from './khitma-group.service';
 import { QuranComponent } from './pages/quran/quran.component';
 import { GetComponent } from './pages/get/get.component';
-import { PersonalKhitmaComponent } from './pages/me/personal-khitma/personal-khitma.component';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 import { KhitmaProgressComponent } from './shared/khitma-progress/khitma-progress.component';
 import { CommonModule } from '@angular/common';
@@ -65,7 +61,6 @@ import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
 import { NewTaskComponent } from './dialog/new-task/new-task.component';
 import { Group_SameTask_Component } from './pages/group/group-dashboard/group-types/sametask/sametask.component';
-import { KhitmaPagesProgressComponent } from './shared/khitma-pages-progress/khitma-pages-progress.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 
 
@@ -82,7 +77,6 @@ const routes: Routes = [
   { path: 'me/groups/archive', component: ArchiveComponent },
   // { path: 'me', component: DashboardComponent },
   { path: 'me/groups', component: DashboardComponent },
-  { path: 'me/personal-khitma', component: PersonalKhitmaComponent },
   { path: 'group/:groupId/invite', component: GroupInviteComponent },
   {
     path: 'group/:groupId', canActivate: [GroupJoinedGuard], children: [
@@ -106,15 +100,11 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     CreateGroupComponent,
-    JuzToggleComponent,
     GroupComponent,
-    JuzListComponent,
     GroupInviteComponent,
     GroupJoinComponent,
     KhitmaInfoComponent,
     GroupDashboardComponent,
-    JuzComponent,
-    JuzGridComponent,
     GroupListComponent,
     GroupListItemComponent,
     ConfirmDialogComponent,
@@ -129,7 +119,6 @@ const routes: Routes = [
     StartNewKhitmaComponent,
     QuranComponent,
     GetComponent,
-    PersonalKhitmaComponent,
     PopMenuComponent,
     KhitmaProgressComponent,
     MoonComponent,
@@ -138,7 +127,6 @@ const routes: Routes = [
     GroupMembersComponent,
     NewTaskComponent,
     Group_SameTask_Component,
-    KhitmaPagesProgressComponent,
     LoadingComponent
   ],
   imports: [

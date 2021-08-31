@@ -2,13 +2,6 @@
 export const NUM_OF_AJZA = 30;
 export const NUM_OF_PAGES = 604;
 
-export const JUZ_STATUS = Object.freeze({
-    IDLE: 0,
-    BOOKED: 1,
-    DONE: 2
-});
-
-
 
 
 export const KHITMA_CYCLE_TYPE = Object.freeze({
@@ -19,9 +12,7 @@ export const KHITMA_CYCLE_TYPE = Object.freeze({
 
 
 export const KHITMA_GROUP_TYPE = Object.freeze({
-    SEQUENTIAL: 'SEQUENTIAL',
     SAME_TASK: 'SAME_TASK',
-    PAGES_DISTRIBUTION: 'PAGES_DISTRIBUTION'
 });
 
 
@@ -38,25 +29,6 @@ export function GET_JUZ_READ_EXTERNAL_URL(juzIndex: number): string {
     let url = "https://app.quranflash.com/book/Medina1?ar#/reader/chapter/" + (JUZ_START_PAGE[juzIndex] + PAGE_OFFSET);
 
     return url;
-}
-
-
-export class Juz {
-    index: number;
-    status: number;
-    owner: string;
-
-    public constructor(init?: Partial<Juz>) {
-        Object.assign(this, init);
-    }
-
-    static nextStatus(juzStatus) {
-
-        const JUZ_STATUS_COUNT = 3;
-
-        return (juzStatus + 1) % JUZ_STATUS_COUNT;
-    }
-
 }
 
 
@@ -92,101 +64,6 @@ export class KhitmaGroup {
 }
 
 
-export class KhitmaGroup_Sequential extends KhitmaGroup {
-
-    ajza?: Juz[];
-
-
-    public constructor(init?: Partial<KhitmaGroup_Sequential>) {
-        super(init);
-
-        if (!this.ajza) {
-            this._initAjza();
-        }
-    }
-
-    private _initAjza() {
-        this.ajza = [];
-        for (var i = 0; i < NUM_OF_AJZA; i++) {
-            this.ajza.push(new Juz({ index: i, status: JUZ_STATUS.IDLE }))
-        }
-
-        // this.ajza = Array(NUM_OF_AJZA).fill(new Juz());
-    }
-
-    public isDone() {
-        return this.ajza.every(juz => juz.status === JUZ_STATUS.DONE);
-    }
-
-    public assignJuz(juzIndex, owner) {
-        this.ajza[juzIndex].owner = owner;
-    }
-
-    public toJson() {
-
-        let res = new KhitmaGroup_Sequential(this);
-
-        // convert to native js object
-        res.ajza = this.ajza.map((obj) => { return Object.assign({}, obj) });
-
-        return res;
-    }
-
-    public getAjzaObj() {
-        return { ...this.ajza.map((obj) => { return Object.assign({}, obj) }) };
-    }
-
-    public hasIdleAjza() {
-        for (var i = 0; i < NUM_OF_AJZA; i++) {
-            if (this.ajza[i].status == JUZ_STATUS.IDLE) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public getMyJuzIndex(owner) {
-
-        let myJuz = this.ajza.find(juz => juz.owner === owner && juz.status === JUZ_STATUS.BOOKED);
-
-        return myJuz ? myJuz.index : null;
-    }
-
-    static getEmptyAjzaObj() {
-
-        let ajza = KhitmaGroup_Sequential.getEmptyAjzaArray();
-
-        return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
-    }
-
-    static getEmptyAjzaArray() {
-
-        let ajza = [];
-        for (var i = 0; i < NUM_OF_AJZA; i++) {
-            ajza.push(new Juz({ index: i, status: JUZ_STATUS.IDLE }))
-        }
-
-        return ajza;
-    }
-
-    static convertAjzaToObj(ajza: Juz[]) {
-
-        return { ...ajza.map((obj) => { return Object.assign({}, obj) }) };
-    }
-
-    static convertAjzaToArray(ajza: object): Juz[] {
-
-        if (!ajza) {
-            return [];
-        }
-
-        return Object.values(ajza).sort((a: any, b: any) => (a.index > b.index) ? 1 : -1);
-    }
-
-
-
-}
 
 export class KhitmaGroup_SameTask extends KhitmaGroup {
     task: string;
@@ -259,91 +136,3 @@ export class GroupMember {
         Object.assign(this, init);
     }
 }
-
-
-
-
-
-export class KhitmaGroup_Pages extends KhitmaGroup {
-    isStarted: boolean;
-    task: string;
-    members: GroupMember_Pages[];
-
-    public constructor(init?: Partial<KhitmaGroup_Pages>) {
-        super(init);
-        this.members = this._createMembersArray(this.members);
-    }
-
-    private _createMembersArray(membersObj) {
-
-        let arr = [];
-
-        for (let [name, value] of Object.entries(membersObj)) {
-
-            let memberData = <GroupMember_Pages>value;
-
-            arr.push({
-                name: name,
-                isTaskDone: memberData.isTaskDone,
-                pagesTask: memberData.pagesTask
-            });
-        }
-
-        return arr.sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
-    }
-
-    public getCounts() {
-
-        return {
-            total: this.members.length,
-            done: this.members.filter(function (item) { return item.isTaskDone; }).length
-        };
-
-    }
-
-    public createGroupMember(username) {
-
-        let member = this.members.find(m => m.name === username);
-
-        return new GroupMember_Pages({
-            name: username,
-            isTaskDone: member?.isTaskDone,
-            pagesTask: member?.pagesTask,
-        });
-    }
-
-    // public assignMemberPages(username, startPage, endPage) {
-
-    //     let member = this.members.find(m => m.name === username);
-
-    //     member.pagesTask = {
-    //         start: startPage,
-    //         end: endPage,
-    //     }
-    // }
-
-
-    public getMembersObj() {
-
-        return this.members.reduce((m, { name, isTaskDone, pagesTask }) => ({
-            ...m, [name]: {
-                // name: name,
-                isTaskDone: isTaskDone,
-                pagesTask: pagesTask,
-            }
-        }), {});
-
-    }
-}
-
-
-export class GroupMember_Pages extends GroupMember {
-
-    pagesTask;
-
-    public constructor(init?: Partial<GroupMember_Pages>) {
-        super(init);
-    }
-
-}
-

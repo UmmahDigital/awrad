@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { JUZ_STATUS, KhitmaGroup, KhitmaGroup_SameTask } from '../entities/entities';
+import { KhitmaGroup, KhitmaGroup_SameTask } from '../entities/entities';
 import { map, catchError, take, first } from 'rxjs/operators';
 
 // import * as firestore from "../../../node_modules/firebase";
@@ -31,7 +31,6 @@ export class TestComponent implements OnInit {
       let updatedObj = {};
       updatedObj[("ajza." + i)] = {
         index: i,
-        status: JUZ_STATUS.DONE,
         owner: "hasan" + (i + 1)
       };
 

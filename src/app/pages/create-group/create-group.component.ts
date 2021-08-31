@@ -47,28 +47,8 @@ export class CreateGroupComponent implements OnInit {
         return;
       }
 
-      let detailedType = this.typeParam.split(".");
+      this.groupType = KHITMA_GROUP_TYPE.SAME_TASK;
 
-      this.isRecurring = (detailedType[0] == 'recurring');
-
-      if (this.isRecurring) {
-
-        switch (detailedType[1]) {
-          case 'sametask': { this.groupType = KHITMA_GROUP_TYPE.SAME_TASK; break; }
-          case 'sequential': { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
-          default: { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
-
-        }
-      }
-      else {
-        switch (detailedType[1]) {
-          case 'pagesdistribution': { this.groupType = KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION; break; }
-          case 'sequential': { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
-          default: { this.groupType = KHITMA_GROUP_TYPE.SEQUENTIAL; break; }
-
-        }
-
-      }
 
     });
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KhitmaGroup, KhitmaGroup_Sequential, NUM_OF_AJZA } from './entities/entities';
+import { KhitmaGroup, NUM_OF_AJZA } from './entities/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -22,31 +22,11 @@ export class LocalDatabaseService {
 
     this.myGlobalKhitmaAjza = JSON.parse(localStorage.getItem("myGlobalKhitmaAjza")) || null;
 
-    if (!this.personalKhitma) {
-      this._initPersonalKhitma();
-    }
-
-    if (!this.myGlobalKhitmaAjza) {
-      this._initMyGlobalKhitmaAjza();
-    }
 
   }
 
-  private _initPersonalKhitma() {
-    let ajza = KhitmaGroup_Sequential.getEmptyAjzaArray();
-    this.updateMyPersonalKhitmah(ajza);
-  }
 
-  private _initMyGlobalKhitmaAjza() {
 
-    let ajza = [];
-
-    for (let i = 0; i < NUM_OF_AJZA; i++) {
-      ajza.push(false);
-    }
-
-    this.updateGlobalKhitmaAjza(ajza);
-  }
 
   private _byDateSorter(a, b) {
     return a.joinTimestamp - b.joinTimestamp;
@@ -94,32 +74,8 @@ export class LocalDatabaseService {
     return this.groups;
   }
 
-  getMyJuz(groupId) {
-    return this.groups[groupId].juzIndex;
-  }
-
-  // setMyJuz(groupId, cycle, juzIndex) {
-
-  //   if (!this.groups[groupId]) {
-  //     return;
-  //   }
-
-  //   this.groups[groupId].juzIndex = juzIndex;
-  //   this.groups[groupId].cycle = cycle;
-
-  //   if (juzIndex != null) {
-  //     this.groups[groupId].lastJuzIndex = juzIndex;
-  //   }
-
-  //   this._save();
-  // }
-
   getMyKhitmaCycle(groupId) {
     return this.groups[groupId].cycle;
-  }
-
-  getMyLastJuz(groupId) {
-    return this.groups[groupId].lastJuzIndex;
   }
 
   getMyGroups() {
@@ -164,50 +120,6 @@ export class LocalDatabaseService {
 
 
 
-
-  getMyPersonalKhitmah() {
-    return this.personalKhitma;
-
-  }
-
-  updateMyPersonalKhitmah(personalKhitmaAjza) {
-    this.personalKhitma = personalKhitmaAjza;
-    localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
-  }
-
-  updateMyPersonalKhitmahJuz(juz) {
-
-    if (!this.personalKhitma) {
-      return;
-    }
-
-
-    this.personalKhitma[juz.index].status = juz.status;
-    localStorage.setItem("personalKhitma", JSON.stringify(this.personalKhitma));
-  }
-
-
-  // ** Global Khitma
-
-  getMyGlobalKhitmaAjza() {
-    return this.myGlobalKhitmaAjza;
-  }
-
-  resetMyGlobalKhitmaAjza() {
-    this._initMyGlobalKhitmaAjza();
-  }
-
-  updateGlobalKhitmaAjza(ajza) {
-    this.myGlobalKhitmaAjza = ajza;
-    localStorage.setItem("myGlobalKhitmaAjza", JSON.stringify(this.myGlobalKhitmaAjza));
-  }
-
-  updateGlobalKhitmaJuz(juzIndex, isDone) {
-
-    this.myGlobalKhitmaAjza[juzIndex] = isDone;
-    this.updateGlobalKhitmaAjza(this.myGlobalKhitmaAjza);
-
-  }
 
 
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { KhitmaGroupService } from '../../../../app/khitma-group.service';
-import { GroupMember, JUZ_STATUS, KHITMA_GROUP_TYPE } from '../../../entities/entities';
+import { GroupMember } from '../../../entities/entities';
 
 @Component({
   selector: 'app-group-list-item',
@@ -18,52 +18,9 @@ export class GroupListItemComponent implements OnInit {
   constructor(private groupsApi: KhitmaGroupService) { }
 
   ngOnInit(): void {
-
-
-    switch (this.group.type) {
-      case KHITMA_GROUP_TYPE.SAME_TASK: {
-        this.progress = this.calcProgress_SameTask();
-        break;
-      }
-      case KHITMA_GROUP_TYPE.SEQUENTIAL: {
-        this.progress = this.calcProgress_Sequential();
-        break;
-      }
-      case KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION: {
-        this.progress = this.calcProgress_SameTask();
-        break;
-      }
-      default: {
-        this.progress = this.calcProgress_Sequential();
-      }
-    }
-
-
-
+    this.progress = this.calcProgress_SameTask();
     this.link = this.groupsApi.getGroupURL(this.group.id);
   }
-
-  calcProgress_Sequential() {
-
-    let counters = {
-      done: 0,
-      booked: 0,
-      idle: 0
-    };;
-
-    for (let i = 0, len = this.group.ajza.length; i < len; i++) {
-
-      switch (this.group.ajza[i].status) {
-        case JUZ_STATUS.IDLE: counters["idle"]++; break;
-        case JUZ_STATUS.BOOKED: counters["booked"]++; break;
-        case JUZ_STATUS.DONE: counters["done"]++; break;
-      };
-    }
-
-    return counters;
-
-  }
-
 
   calcProgress_SameTask() {
 

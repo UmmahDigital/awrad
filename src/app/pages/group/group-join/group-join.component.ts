@@ -40,18 +40,10 @@ export class GroupJoinComponent implements OnInit {
 
     this.localDB.joinGroup(this.group.id, username);
 
-    if (this.group.type === KHITMA_GROUP_TYPE.SAME_TASK || this.group.type === KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION) {
-
-      this.groupsApi.addGroupMember(this.group.id, username).then(() => {
-        window.location.reload();
-
-      });
-
-    }
-    else {
+    this.groupsApi.addGroupMember(this.group.id, username).then(() => {
       window.location.reload();
+    });
 
-    }
 
     // this.router.navigate(['/group', this.group.id, 'dashboard']);
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { KhitmaGroup, JUZ_STATUS, KHITMA_GROUP_TYPE, KhitmaGroup_Sequential, KhitmaGroup_SameTask, KhitmaGroup_Pages } from 'src/app/entities/entities';
+import { KhitmaGroup, KHITMA_GROUP_TYPE, KhitmaGroup_SameTask } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { KhitmaGroupService } from '../../../khitma-group.service';
 
@@ -7,16 +7,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 
-import { Overlay, OverlayContainer, ScrollStrategy } from '@angular/cdk/overlay';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Title } from '@angular/platform-browser';
 import { AlertService } from 'src/app/alert.service';
 import { NativeApiService } from 'src/app/native-api.service';
 import { EditKhitmaDetailsComponent } from 'src/app/dialog/edit-khitma-details/edit-khitma-details.component';
-import { StartNewKhitmaComponent } from 'src/app/dialog/start-new-khitma/start-new-khitma.component';
-import { NativeShareService } from 'src/app/native-share.service';
 import { Router } from '@angular/router';
-import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { StatusMessageGenerators } from './status-messages';
 import { Subject } from 'rxjs';
 import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
@@ -65,29 +61,13 @@ export class GroupDashboardComponent implements OnInit {
 
       this.titleService.setTitle(group.title);
 
+
       if (!group) {
         return;
       }
 
-      switch (group.type) {
-        case KHITMA_GROUP_TYPE.SAME_TASK: {
-          this.group = new KhitmaGroup_SameTask(group);
-          break;
-        }
-        case KHITMA_GROUP_TYPE.SEQUENTIAL: {
-          this.group = new KhitmaGroup_Sequential(group);
-          break;
-        }
-        case KHITMA_GROUP_TYPE.PAGES_DISTRIBUTION: {
-          this.group = new KhitmaGroup_Pages(group);
-          break;
-        }
-        default: {
-          this.group = new KhitmaGroup_Sequential(group);
-        }
-      }
-
-      this.group.type = this.group.type || KHITMA_GROUP_TYPE.SEQUENTIAL; // compitability
+      this.group = new KhitmaGroup_SameTask(group);
+      this.group.type = this.group.type || KHITMA_GROUP_TYPE.SAME_TASK;
 
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);
