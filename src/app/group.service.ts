@@ -70,7 +70,7 @@ export class GroupService {
 
     };
 
-    newGroupObj["task"] = firstTask;
+    newGroupObj["task"] = firstTask || null;
     newGroupObj["members"] = {};
     newGroupObj["members"][author] = {
       // name: author,
