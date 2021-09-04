@@ -43,19 +43,41 @@
             </mat-expansion-panel-header>
 
 
-            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
-                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
-                <mat-icon>sports_score</mat-icon>
-                <span>مهمّة جديدة</span>
-            </button>
-
-
-
-
             <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
                 <mat-icon>format_list_numbered_rtl</mat-icon>
                 <span>مشاركة وضع المجموعة</span>
             </button>
+
+            <button mat-flat-button (click)="shareStatusMsgWhatsapp(); adminPanelOpen=false;" class="whatsapp-btn">
+                <mat-icon>format_list_numbered_rtl</mat-icon>
+                <span>مشاركة وضع المجموعة - وتسأب</span>
+            </button>
+
+            <!-- whatsapp direct share? -->
+
+
+
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
+                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+                <mat-icon>sports_score</mat-icon>
+                <span>تعديل المهمّات الحاليّة</span>
+            </button>
+
+
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
+                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+                <mat-icon>sports_score</mat-icon>
+                <span>نفس المهمّات من جديد</span>
+            </button>
+
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
+                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+                <mat-icon>sports_score</mat-icon>
+                <span>مهمّات جديدة</span>
+            </button>
+
+
+
 
 
 

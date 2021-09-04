@@ -101,6 +101,14 @@ export class GroupDashboardComponent implements OnInit {
     this.nativeApi.share(("وضع المجموعة: " + this.group.title), this.getGroupStatusMsg(), null);
   }
 
+  shareStatusMsgWhatsapp() {
+
+    const link = "//wa.me/?text=" + this.getGroupStatusMsg();
+    window.open(link, '_blank');
+
+  }
+
+
   shareInviteMsg() {
     this.nativeApi.share(("دعوة انضمام: " + this.group.title), this.inviteMsg, null);
   }
