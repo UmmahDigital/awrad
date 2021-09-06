@@ -1,0 +1,4 @@
+<app-todo *ngFor="task in tasks" [isDone]="tasksStatuses[task.id] == TASK_STATUS.DONE"
+    (onToggled)="taskToggled($event)">
+    <div content> {{task.title}} </div>
+</app-todo>

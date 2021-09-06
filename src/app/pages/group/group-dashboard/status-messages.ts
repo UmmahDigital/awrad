@@ -1,6 +1,3 @@
-import { GROUP_TYPE } from "src/app/entities/entities";
-
-
 function _getDateInArabic(date: Date) {
     // var months = ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو",
     //   "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
@@ -11,7 +8,7 @@ function _getDateInArabic(date: Date) {
 }
 
 
-function statusMsg_SameTask(group) {
+function _getGroupStatusMsg(group) {
 
     function getStatusIcon(isDone) {
         return isDone ? '🟢' : '🔴';
@@ -56,8 +53,7 @@ function statusMsg_SameTask(group) {
     return msg;
 }
 
-let _StatusMessages = {};
-_StatusMessages[GROUP_TYPE.SAME_TASK] = statusMsg_SameTask;
 
-
-export const StatusMessageGenerators = _StatusMessages;
+export const StatusMessages = {
+    fromGroup: _getGroupStatusMsg
+};

@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { Group, GROUP_TYPE, Group_SameTask } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/group';
 import { GroupService } from 'src/app/group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 
@@ -36,7 +36,7 @@ export class GroupJoinComponent implements OnInit {
 
     this.$gaService.event('group_joined');
 
-    let username = Group.refineOwnerName(this.username);
+    let username = Group.refineUsername(this.username);
 
     this.localDB.joinGroup(this.group.id, username);
 

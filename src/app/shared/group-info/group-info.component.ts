@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { Group, GROUP_TYPE } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/entities';
 import { GroupService } from 'src/app/group.service';
 
 
@@ -17,7 +17,6 @@ export class GroupInfoComponent implements OnInit {
   @Input() isExpanded?: boolean;
 
   groupLink: string;
-  GROUP_TYPE = GROUP_TYPE;
 
   constructor(private groupsApi: GroupService) { }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GroupMember } from 'src/app/entities/entities';
+import { GroupMember } from 'src/app/entities/member';
 
 @Component({
   selector: 'app-group-members',
@@ -8,7 +8,7 @@ import { GroupMember } from 'src/app/entities/entities';
 })
 export class GroupMembersComponent implements OnInit {
 
-  @Input() members: GroupMember;
+  @Input() members: GroupMember[];
   @Input() isEditMode: boolean;
   @Output() onMemberClick?= new EventEmitter<GroupMember>();
   @Output() onMemberRemove?= new EventEmitter<GroupMember>();
@@ -33,13 +33,12 @@ export class GroupMembersComponent implements OnInit {
 
     let newMember = new GroupMember({
       name: name,
-      isTaskDone: false
+      tasksStatuses: {}
     });
 
     this.onMemberAdd.emit(newMember);
 
     this.newMemberName = "";
-
 
   }
 

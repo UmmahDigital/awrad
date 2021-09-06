@@ -23,7 +23,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
 import { GroupInviteComponent } from './pages/create-group/group-invite/group-invite.component';
 
-import { GroupComponent } from './pages/group/group.component';
 import { GroupDashboardComponent } from './pages/group/group-dashboard/group-dashboard.component';
 import { GroupJoinComponent } from './pages/group/group-join/group-join.component';
 
@@ -53,16 +52,13 @@ import { GetComponent } from './pages/get/get.component';
 import { PopMenuComponent } from './shared/pop-menu/pop-menu.component';
 import { GroupProgressComponent } from './shared/group-progress/group-progress.component';
 import { CommonModule } from '@angular/common';
-import { MoonComponent } from './shared/moon/moon.component';
 import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
 import { NewTaskComponent } from './dialog/new-task/new-task.component';
-import { Group_SameTask_Component } from './pages/group/group-dashboard/group-types/sametask/sametask.component';
+import { GroupComponent } from './pages/group/group-dashboard/group-types/sametask/group.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { TasksComponent } from './shared/tasks/tasks.component';
 
-
-
-GroupJoinedGuard
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -95,7 +91,6 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     CreateGroupComponent,
-    GroupComponent,
     GroupInviteComponent,
     GroupJoinComponent,
     GroupInfoComponent,
@@ -114,12 +109,12 @@ const routes: Routes = [
     GetComponent,
     PopMenuComponent,
     GroupProgressComponent,
-    MoonComponent,
     TodoComponent,
     GroupMembersComponent,
     NewTaskComponent,
-    Group_SameTask_Component,
-    LoadingComponent
+    GroupComponent,
+    LoadingComponent,
+    TasksComponent
   ],
   imports: [
     CommonModule,

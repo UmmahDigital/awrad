@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Group, GROUP_TYPE, Group_SameTask } from 'src/app/entities/entities';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -11,11 +10,12 @@ import { AlertService } from 'src/app/alert.service';
 import { NativeApiService } from 'src/app/native-api.service';
 import { EditGroupDetailsComponent } from 'src/app/dialog/edit-group-details/edit-group-details.component';
 import { Router } from '@angular/router';
-import { StatusMessageGenerators } from './status-messages';
+import { StatusMessages } from './status-messages';
 import { Subject } from 'rxjs';
-import { Group_SameTask_Component } from './group-types/sametask/sametask.component';
+import { GroupComponent } from './group-types/sametask/group.component';
 import { GroupService } from 'src/app/group.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { Group } from 'src/app/entities/group';
 
 
 @Component({
@@ -26,10 +26,7 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confi
 })
 export class GroupDashboardComponent implements OnInit {
 
-  @ViewChild(Group_SameTask_Component) sameTaskGroupChildComponent: Group_SameTask_Component;
-
-
-  readonly GROUP_TYPE = GROUP_TYPE;
+  @ViewChild(GroupComponent) sameTaskGroupChildComponent: GroupComponent;
 
   group;// : Group_Sequential | Group_SameTask;
 
@@ -66,8 +63,7 @@ export class GroupDashboardComponent implements OnInit {
         return;
       }
 
-      this.group = new Group_SameTask(group);
-      this.group.type = this.group.type || GROUP_TYPE.SAME_TASK;
+      this.group = new Group(group);
 
       if (!this.isInitiated) {
         this.username = this.localDB.getUsername(this.group.id);
@@ -85,7 +81,7 @@ export class GroupDashboardComponent implements OnInit {
   }
 
   getGroupStatusMsg() {
-    return StatusMessageGenerators[this.group.type](this.group);
+    return StatusMessages.fromGroup(this.group);
   }
 
 
@@ -162,21 +158,12 @@ export class GroupDashboardComponent implements OnInit {
 
         this.userWatch$.next('user-leave-group'); // update the children
 
-
-
         this.localDB.archiveGroup(this.group);
 
-        if (this.group.type === GROUP_TYPE.SAME_TASK) {
-          this.groupsApi.removeGroupMember(this.group.id, this.username).then(() => {
-            this.router.navigate(['/']);
-
-          });
-
-        }
-        else {
+        this.groupsApi.removeGroupMember(this.group.id, this.username).then(() => {
           this.router.navigate(['/']);
 
-        }
+        });
 
       }
 

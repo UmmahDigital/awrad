@@ -2,9 +2,11 @@
 
     <!-- <header>المهمّة الحاليّة </header> -->
 
-    <app-todo [isDone]="myMember?.isTaskDone" (onToggled)="taskToggled($event)">
-        <div content> {{group.task}} </div>
-    </app-todo>
+
+
+    <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.tasksStatuses" (onToggled)="taskToggled($event)">
+    </app-tasks>
+
 
     <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
 

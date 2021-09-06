@@ -6,7 +6,9 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { Subject } from 'rxjs';
 import { AlertService } from 'src/app/alert.service';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
-import { GroupMember, Group_SameTask } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/group';
+import { GroupMember } from 'src/app/entities/member';
+import { TASK_STATUS } from 'src/app/entities/task-status';
 import { GroupService } from 'src/app/group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { NativeApiService } from 'src/app/native-api.service';
@@ -14,14 +16,14 @@ import { NativeShareService } from 'src/app/native-share.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-group-sametask',
-  templateUrl: './sametask.component.html',
-  styleUrls: ['./sametask.component.scss']
+  selector: 'app-group',
+  templateUrl: './group.component.html',
+  styleUrls: ['./group.component.scss']
 })
-export class Group_SameTask_Component implements OnInit, OnChanges {
+export class GroupComponent implements OnInit, OnChanges {
 
-  @Input() group: Group_SameTask;
-  @Input() groupWatch$: Subject<Group_SameTask>;
+  @Input() group: Group;
+  @Input() groupWatch$: Subject<Group>;
   @Input() userWatch$?: Subject<string>;
 
   @Input() isAdmin: boolean;
@@ -33,7 +35,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
   showGroupMembers = true;
 
   myMember;
-  counts;
+  progress;
   totalDoneTasks;
 
   constructor(private groupsApi: GroupService,
@@ -49,35 +51,34 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
 
   }
 
-
-
   ngOnInit(): void {
     // this.showGroupMembers = this.isAdmin;
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.myMember = this.group.createGroupMember(this.username);
-    this.counts = this.group.getCounts();
+    this.myMember = this.group.getMember(this.username);
+    this.progress = this.group.getProgress();
     this.totalDoneTasks = this.group.totalDoneTasks || 0;
+
   }
 
-  taskToggled(isDone: boolean) {
+  taskToggled(newStatus: number) {
 
-    this.groupsApi.updateMemberTask(this.group.id, this.username, isDone);
+    this.groupsApi.updateMemberTask(this.group.id, this.username, newStatus);
 
-    if (isDone) {
+    if (newStatus === TASK_STATUS.DONE) {
       this.onAchievement.emit();
     }
 
-    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', (<Group_SameTask>this.group).task);
+    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', (<Group>this.group).task);
 
   }
 
 
   updateTask(newTask) {
 
-    let tmpGroup = (<Group_SameTask>this.group);
+    let tmpGroup = (<Group>this.group);
     tmpGroup.resetMembersTaskStatus();
 
     let membersObj = tmpGroup.getMembersObj();
@@ -99,7 +100,7 @@ export class Group_SameTask_Component implements OnInit, OnChanges {
     this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
 
 
-    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<Group_SameTask>this.group).task);
+    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<Group>this.group).task);
 
 
   }

@@ -2,8 +2,6 @@ import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
-import { GROUP_TYPE } from 'src/app/entities/entities';
-import { switchMap } from 'rxjs/operators';
 import { GroupService } from 'src/app/group.service';
 import { AlertService } from 'src/app/alert.service';
 
@@ -23,12 +21,9 @@ export class CreateGroupComponent implements OnInit {
   description: string;
   author: string;
 
-  firstTask: string;
 
   typeParam: string;
 
-  readonly GROUP_TYPE = GROUP_TYPE;
-  groupType = GROUP_TYPE.SAME_TASK;
   isRecurring = true;
 
   constructor(private $gaService: GoogleAnalyticsService,
@@ -47,20 +42,14 @@ export class CreateGroupComponent implements OnInit {
         return;
       }
 
-      this.groupType = GROUP_TYPE.SAME_TASK;
-
-
     });
 
   }
 
   createGroup() {
 
-    // if (!this.isRecurring) {
-    //   this.groupType = GROUP_TYPE.SEQUENTIAL;
-    // }
 
-    this.groupsApi.createGroup(this.title, this.description, this.author, this.groupType, this.firstTask).then(docRef => {
+    this.groupsApi.createGroup(this.title, this.description, this.author).then(docRef => {
 
       const groupId = docRef.id;
 

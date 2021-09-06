@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Group, Group_SameTask } from './entities/entities';
 
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,6 +9,9 @@ import { LocalDatabaseService } from './local-database.service';
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import { Group } from './entities/group';
+import { TaskStatus, TASK_STATUS } from './entities/task-status';
+import { GroupTask } from './entities/group-task';
 
 
 
@@ -59,18 +61,15 @@ export class GroupService {
   }
 
 
-  public createGroup(title, description, author, groupType?, firstTask?) {
+  public createGroup(title, description, author) {
 
     let newGroupObj = {
       "title": title,
       "description": description || '',
       "author": author,
-      "type": groupType,
       "cycle": 0,
-
     };
 
-    newGroupObj["task"] = firstTask || null;
     newGroupObj["members"] = {};
     newGroupObj["members"][author] = {
       // name: author,
@@ -108,9 +107,47 @@ export class GroupService {
   }
 
 
-  updateGroupTask(groupId, newTask, currentCycle, resetedMembers) {
+  removeGroupMember(groupId, memberName) {
 
-    this.db.doc<Group_SameTask>('groups/' + groupId).update({ "task": newTask, "members": resetedMembers, "cycle": (currentCycle + 1) });
+    let updatedObj = {};
+    updatedObj["members"] = {};
+    updatedObj["members"][memberName] = firebase.default.firestore.FieldValue.delete();
+
+    return this.db.doc<any>('groups/' + groupId).set(updatedObj, { merge: true });
+
+
+  }
+
+  updateMemberTask(groupId: string, memberName: string, taskId: string, newStatus: number) {
+
+    let updatedObj = {};
+
+    updatedObj["members." + memberName + ".tasksStatuses." + taskId + ".status"] = newStatus;
+
+    let countDelta = 0;
+    switch (newStatus) {
+      case TASK_STATUS.DONE: countDelta = 1; break;
+      case TASK_STATUS.DOING: countDelta = 0; break;
+      case TASK_STATUS.TODO: countDelta = -1; break;
+    }
+
+    updatedObj["totalDoneTasks"] = firebase.default.firestore.FieldValue.increment(countDelta);
+
+    this.db.doc<Group>('groups/' + groupId).update(updatedObj);
+
+  }
+
+
+
+  updateGroupTasks(groupId: string, updatedTasks: Record<string, GroupTask>, updatedTasksStatuses: Record<string, TaskStatus>, isNewCycle) {
+
+    let updatedObj = {
+      "task": updatedTasks,
+      "tasksStatuses": updatedTasksStatuses,
+      "cycle": firebase.default.firestore.FieldValue.increment(isNewCycle ? 1 : 0)
+    };
+
+    this.db.doc<any>('groups/' + groupId).update(updatedObj);
   }
 
 
@@ -126,30 +163,9 @@ export class GroupService {
 
   }
 
-  removeGroupMember(groupId, memberName) {
-
-    let updatedObj = {};
-    updatedObj["members"] = {};
-    updatedObj["members"][memberName] = firebase.default.firestore.FieldValue.delete();
-
-    return this.db.doc<any>('groups/' + groupId).set(updatedObj, { merge: true });
-
-
-  }
-
-  updateMemberTask(groupId, memberName, isDone: boolean) {
-
-    let updatedObj = {};
-
-    updatedObj["members." + memberName + ".isTaskDone"] = isDone;
-
-    updatedObj["totalDoneTasks"] = firebase.default.firestore.FieldValue.increment(isDone ? 1 : -1);
-
-    this.db.doc<Group>('groups/' + groupId).update(updatedObj);
-
-
-  }
-
 
 
 }
+
+
+

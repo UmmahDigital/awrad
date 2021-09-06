@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class TodoComponent implements OnInit {
 
   @Input() isDone: boolean;
-
   @Output() onToggled?= new EventEmitter<boolean>();
 
   constructor() { }

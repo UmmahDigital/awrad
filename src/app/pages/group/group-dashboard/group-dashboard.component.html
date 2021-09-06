@@ -57,21 +57,18 @@
 
 
 
-            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
-                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
                 <mat-icon>sports_score</mat-icon>
                 <span>تعديل المهمّات الحاليّة</span>
             </button>
 
 
-            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
-                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
                 <mat-icon>sports_score</mat-icon>
                 <span>نفس المهمّات من جديد</span>
             </button>
 
-            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;"
-                *ngIf="group.type === GROUP_TYPE.SAME_TASK">
+            <button mat-flat-button (click)="sameTaskGroupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
                 <mat-icon>sports_score</mat-icon>
                 <span>مهمّات جديدة</span>
             </button>
@@ -108,9 +105,9 @@
     <section *ngIf="group" class="group-container">
 
 
-        <app-group-sametask *ngIf="group.type === GROUP_TYPE.SAME_TASK" [group]="group" [userWatch$]="userWatch$"
-            [isAdmin]="isAdmin" [username]="username" (onAchievement)="celebrate($event)">
-        </app-group-sametask>
+        <app-group [group]="group" [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username"
+            (onAchievement)="celebrate($event)">
+        </app-group>
 
     </section>
 
