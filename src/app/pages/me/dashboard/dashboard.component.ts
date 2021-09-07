@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
           return;
         }
 
-        this.groups = <Group[]>groups;
+        this.groups = groups;
 
       });
     }

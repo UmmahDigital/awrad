@@ -110,7 +110,17 @@ export class GroupService {
 
 
   getGroups(groupsIds: string[]) {
-    return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' });
+    return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' }).pipe(map(_groups => {
+
+      let groups: Group[] = [];
+
+      _groups.forEach(_group => {
+        groups.push(new Group(_group));
+      });
+
+      return groups;
+
+    }));
   }
 
 
