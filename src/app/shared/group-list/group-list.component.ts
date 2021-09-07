@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Group } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/group';
 
 
 @Component({

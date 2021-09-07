@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
-import { Group } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/group';
 import { GroupService } from 'src/app/group.service';
 
 

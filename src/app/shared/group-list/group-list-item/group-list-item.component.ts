@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GroupMember } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/group';
+import { TASK_STATUS } from 'src/app/entities/task-status';
 import { GroupService } from 'src/app/group.service';
 
 
@@ -10,42 +11,18 @@ import { GroupService } from 'src/app/group.service';
 })
 export class GroupListItemComponent implements OnInit {
 
-  @Input() group;
-
+  @Input() group: Group;
   link;
-
   progress;
+
+  TASK_STATUS = TASK_STATUS;
 
   constructor(private groupsApi: GroupService) { }
 
   ngOnInit(): void {
-    this.progress = this.calcProgress_SameTask();
+
+    this.progress = this.group.getProgress();
     this.link = this.groupsApi.getGroupURL(this.group.id);
   }
-
-  calcProgress_SameTask() {
-
-    let counters = {
-      done: 0,
-      idle: 0
-    };
-
-    for (let [name, value] of Object.entries(this.group.members)) {
-
-      let m = <GroupMember>value;
-
-      if (m.isTaskDone) {
-        counters["done"]++;
-      }
-      else {
-        counters["idle"]++;
-      }
-
-    }
-
-    return counters;
-
-  }
-
 
 }

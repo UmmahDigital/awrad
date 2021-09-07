@@ -14,7 +14,8 @@
 </section>
 
 
-<app-group-progress [current]="counts?.done" style="margin-top: 32px;" [target]="counts?.total"></app-group-progress>
+<app-group-progress [current]="progress[TASK_STATUS.DONE]" style="margin-top: 32px;" [target]="progress?.total">
+</app-group-progress>
 
 
 <section *ngIf="showGroupMembers">
@@ -43,11 +44,14 @@
 
 
 
-    <app-group-members [members]="this.group.members" [isEditMode]="isMembersListEditMode"
-        (onMemberClick)="toggleMemberTaskState($event)" (onMemberRemove)="removeGroupMember($event)"
-        (onMemberAdd)="addGroupMember($event)">
+    <app-group-members [members]="this.group.getMembers()" [isEditMode]="isMembersListEditMode"
+        (onMemberRemove)="removeGroupMember($event)" (onMemberAdd)="addGroupMember($event)">
     </app-group-members>
 
+
+
+
+    <!-- (onMemberClick)="toggleMemberTaskState($event)" -->
 
 </section>
 

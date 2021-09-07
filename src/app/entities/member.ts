@@ -33,6 +33,10 @@ export class GroupMember {
     public removeTaskStatus(taskId) {
         delete this._tasksStatuses[taskId];
     }
+
+    public setTasksStatuses(tasksStatuses: Record<string, TaskStatus>) {
+        this._tasksStatuses = tasksStatuses;
+    }
 }
 
 

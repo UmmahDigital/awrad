@@ -32,8 +32,7 @@ export class GroupMembersComponent implements OnInit {
   addMember(name) {
 
     let newMember = new GroupMember({
-      name: name,
-      tasksStatuses: {}
+      name: name
     });
 
     this.onMemberAdd.emit(newMember);

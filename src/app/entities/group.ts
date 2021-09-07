@@ -12,40 +12,47 @@ export class Group {
     targetDate?: string;
     admins?: string;
     totalDoneTasks: number;
+    lastGeneratedTaskId: number;
 
-    private _tasks: Record<string, GroupTask>;
-    private _members: Record<string, GroupMember>;
-    private _lastGeneratedTaskId: number;
+    tasks: Record<string, GroupTask>;
+    members: Record<string, GroupMember>;
+    membersTasksStatuses: Record<string, Record<string, TaskStatus>>;
 
-    public constructor(init: Partial<Group>, membersTasksStatuses: Record<string, TaskStatus[]>) {
+    public constructor(init: Partial<Group>) {
         Object.assign(this, init);
         this.cycle = init.cycle || 0;
-
         // this.members = this._createMembersArray(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 
-        this._initMemberTasksStatuses(membersTasksStatuses);
+        this._initMembersTasksStatuses();
+
     }
 
-    private _initMemberTasksStatuses(membersTasksStatuses: Record<string, TaskStatus[]>) {
-
-        this.getMembers().forEach(member => {
-
-            let tasksStatuses = membersTasksStatuses[member.name];
-
-            tasksStatuses.forEach(taskStatus => {
-                member.setTaskStatus(taskStatus.groupTaskId, taskStatus.status);
-            });
-
-            // let tasksStatuses = member.getTasksStatuses();
-
-            // Object.values(tasksStatuses).forEach(taskStatus => {
-
-            //     member.setTaskStatus(taskStatus.groupTaskId, taskStatus.status);
-
-            // });
-
+    private _initMembersTasksStatuses() {
+        Object.keys(this.membersTasksStatuses).forEach((memberName) => {
+            this.members[memberName].setTasksStatuses(this.membersTasksStatuses[memberName]);
         });
     }
+
+    // private _initMemberTasksStatuses(membersTasksStatuses: Record<string, TaskStatus[]>) {
+
+    //     this.getMembers().forEach(member => {
+
+    //         let tasksStatuses = membersTasksStatuses[member.name];
+
+    //         tasksStatuses.forEach(taskStatus => {
+    //             member.setTaskStatus(taskStatus.groupTaskId, taskStatus.status);
+    //         });
+
+    //         // let tasksStatuses = member.getTasksStatuses();
+
+    //         // Object.values(tasksStatuses).forEach(taskStatus => {
+
+    //         //     member.setTaskStatus(taskStatus.groupTaskId, taskStatus.status);
+
+    //         // });
+
+    //     });
+    // }
 
     public getURL() {
         return location.origin + '/group/' + this.id;
@@ -57,21 +64,18 @@ export class Group {
 
     public getProgress() {
 
-        let members = this.getMembers();
-        // let tasks = 
-
         let counters = {};
         counters[TASK_STATUS.DOING] = 0;
         counters[TASK_STATUS.DONE] = 0;
 
-        members.forEach(member => {
-            Object.values(member.getTasksStatuses()).forEach(taskStatus => {
+        Object.values(this.membersTasksStatuses).forEach(_memberTasksStatuses => {
+            Object.values(_memberTasksStatuses).forEach(taskStatus => {
                 counters[taskStatus.status]++;
             });
         });
 
-        const total = this.getTasks().length * members.length;
-        counters[TASK_STATUS.TODO] = total - counters[TASK_STATUS.DOING] - counters[TASK_STATUS.DONE];
+        counters['total'] = this.getTasks().length * this.getMembers().length;
+        counters[TASK_STATUS.TODO] = counters['total'] - counters[TASK_STATUS.DOING] - counters[TASK_STATUS.DONE];
 
         return counters;
     }
@@ -81,15 +85,19 @@ export class Group {
 
 
     public getMembers(): GroupMember[] {
-        return Object.values(this._members);
+        return Object.values(this.members);
     }
 
     public getMember(name): GroupMember {
-        return this._members[name];
+        return this.members[name];
     }
 
     public getTasks(): GroupTask[] {
-        return Object.values(this._tasks);
+        return Object.values(this.tasks);
+    }
+
+    public getTask(id): GroupTask {
+        return this.tasks[id];
     }
 
     public updateTasks(newTasks: Record<string, GroupTask>) {
@@ -111,15 +119,62 @@ export class Group {
             }
         });
 
-        this._tasks = newTasks;
+        this.tasks = newTasks;
     }
 
     private _getNewTaskId() {
-        this._lastGeneratedTaskId++;
-        return this._lastGeneratedTaskId;
+        this.lastGeneratedTaskId++;
+        return this.lastGeneratedTaskId;
     }
 
 
+    public toObj() {
+
+        // return Object.assign({}, this);
+
+        return JSON.parse(JSON.stringify(this));
+
+        // let obj = {
+        //     id: this.id,
+        //     title: this.title,
+        //     description: this.description,
+        //     author: this.author,
+        //     creationTimestamp: this.creationTimestamp,
+        //     cycle: this.cycle,
+        //     targetDate: this.targetDate,
+        //     admins: this.admins,
+        //     totalDoneTasks: this.totalDoneTasks,
+        //     lastGeneratedTaskId: this.lastGeneratedTaskId,
+
+        //     tasks: {},
+        //     members: {},
+        //     membersTasksStatuses: {},
+        // };
+
+
+        // Object.keys(this.tasks).forEach(taskId => {
+        //     obj.tasks[taskId] = this.tasks[taskId];
+        // });
+
+        // Object.keys(this.members).forEach(memberName => {
+        //     obj.members[memberName] = this.members[memberName];
+        // });
+
+        // Object.keys(this.membersTasksStatuses).forEach(memberName => {
+
+        //     obj.membersTasksStatuses[memberName] = {};
+
+        //     Object.keys(this.membersTasksStatuses[memberName]).forEach(taskId => {
+        //         obj.membersTasksStatuses[memberName][taskId] = Object.assign({}, this.membersTasksStatuses[memberName][taskId]);
+        //     });
+
+        // });
+
+        // // remove empty properties to prevent firebase errors
+        // Object.keys(obj).forEach(key => obj[key] === undefined && delete obj[key]);
+
+        // return obj;
+    }
 
     //*********************** */
 
@@ -127,10 +182,23 @@ export class Group {
         return { ...group, ...fieldsToUpdate };
     }
 
-    static refineUsername(name) {
+    public static refineUsername(name) {
         return name.trim();
     }
 
+    // public static generateMembersTasksStatuses(members: Record<string, GroupMember>, tasksStatuses: Record<string, TaskStatus[]>) {
+
+    //     this.getMembers().forEach(member => {
+
+    //         let tasksStatuses = Object.values(member.getTasksStatuses());
+
+    //         tasksStatuses.forEach(taskStatus => {
+    //             if (!newTasks[taskStatus.groupTaskId]) {
+    //                 member.removeTaskStatus(taskStatus.groupTaskId);
+    //             }
+    //         });
+    //     });
+    // }
 
 
 

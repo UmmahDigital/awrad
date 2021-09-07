@@ -8,7 +8,7 @@ import { AlertService } from 'src/app/alert.service';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { Group } from 'src/app/entities/group';
 import { GroupMember } from 'src/app/entities/member';
-import { TASK_STATUS } from 'src/app/entities/task-status';
+import { TaskStatus, TASK_STATUS } from 'src/app/entities/task-status';
 import { GroupService } from 'src/app/group.service';
 import { LocalDatabaseService } from 'src/app/local-database.service';
 import { NativeApiService } from 'src/app/native-api.service';
@@ -30,6 +30,8 @@ export class GroupComponent implements OnInit, OnChanges {
   @Input() username: string;
 
   @Output() onAchievement?= new EventEmitter();
+
+  TASK_STATUS = TASK_STATUS;
 
   isMembersListEditMode = false;
   showGroupMembers = true;
@@ -63,47 +65,55 @@ export class GroupComponent implements OnInit, OnChanges {
 
   }
 
-  taskToggled(newStatus: number) {
+  taskToggled(newTaskStatus: TaskStatus) {
 
-    this.groupsApi.updateMemberTask(this.group.id, this.username, newStatus);
+    this.groupsApi.updateMemberTask(this.group.id, this.username, newTaskStatus.groupTaskId, newTaskStatus.status);
 
-    if (newStatus === TASK_STATUS.DONE) {
+    if (newTaskStatus.status === TASK_STATUS.DONE) {
       this.onAchievement.emit();
     }
 
-    this.$gaService.event(isDone ? 'task_done' : 'task_undone', 'tasks', (<Group>this.group).task);
+    // analytics:
 
-  }
-
-
-  updateTask(newTask) {
-
-    let tmpGroup = (<Group>this.group);
-    tmpGroup.resetMembersTaskStatus();
-
-    let membersObj = tmpGroup.getMembersObj();
-
-    this.groupsApi.updateGroupTask(this.group.id, newTask, this.group.cycle, membersObj);
-
-    this.$gaService.event('new_task', 'tasks', newTask);
-
-  }
-
-
-  toggleMemberTaskState(member: GroupMember) {
-
-    if (!this.isAdmin) {
-      return;
+    let newStatusTitle = "task_done";
+    switch (newTaskStatus.status) {
+      case TASK_STATUS.DONE: newStatusTitle = "task_done"; break;
+      case TASK_STATUS.DOING: newStatusTitle = "task_done"; break;
+      case TASK_STATUS.TODO: newStatusTitle = "task_done"; break;
     }
-
-    member.isTaskDone = !member.isTaskDone;
-    this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
-
-
-    this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<Group>this.group).task);
-
+    this.$gaService.event(newStatusTitle, 'tasks', this.group.getTask(newTaskStatus.groupTaskId).title);
 
   }
+
+
+  // updateTask(newTask) {
+
+  //   let tmpGroup = (<Group>this.group);
+  //   tmpGroup.resetMembersTaskStatus();
+
+  //   let membersObj = tmpGroup.getMembersObj();
+
+  //   this.groupsApi.updateGroupTask(this.group.id, newTask, this.group.cycle, membersObj);
+
+  //   this.$gaService.event('new_task', 'tasks', newTask);
+
+  // }
+
+
+  // toggleMemberTaskState(member: GroupMember) {
+
+  //   if (!this.isAdmin) {
+  //     return;
+  //   }
+
+  //   member.isTaskDone = !member.isTaskDone;
+  //   this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
+
+
+  //   this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<Group>this.group).task);
+
+
+  // }
 
   removeGroupMember(member: GroupMember) {
 
@@ -142,7 +152,7 @@ export class GroupComponent implements OnInit, OnChanges {
 
       if (newTask) {
 
-        this.updateTask(newTask);
+        // this.updateTask(newTask);
 
       }
 

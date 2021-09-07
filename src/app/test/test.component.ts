@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Group } from '../entities/entities';
 import { map, catchError, take, first } from 'rxjs/operators';
 
 // import * as firestore from "../../../node_modules/firebase";
@@ -9,6 +8,7 @@ import { GroupService } from '../group.service';
 
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
+import { Group } from '../entities/group';
 
 
 @Component({

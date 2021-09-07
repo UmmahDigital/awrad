@@ -12,6 +12,7 @@ import 'firebase/firestore';
 import { Group } from './entities/group';
 import { TaskStatus, TASK_STATUS } from './entities/task-status';
 import { GroupTask } from './entities/group-task';
+import { GroupMember } from './entities/member';
 
 
 
@@ -63,20 +64,26 @@ export class GroupService {
 
   public createGroup(title, description, author) {
 
-    let newGroupObj = {
+    let newGroup = new Group({
       "title": title,
       "description": description || '',
       "author": author,
       "cycle": 0,
-    };
+      "totalDoneTasks": 0,
+      "lastGeneratedTaskId": -1,
+      "tasks": {},
+      "members": {},
+      "membersTasksStatuses": {},
+    });
 
-    newGroupObj["members"] = {};
-    newGroupObj["members"][author] = {
-      // name: author,
-      isTaskDone: false
-    }
+    newGroup["members"][author] = new GroupMember({ name: author });
 
-    return this.db.collection('groups').add(newGroupObj);
+
+
+    return this.db.collection('groups').add({
+      ...newGroup.toObj(),
+      "creationTimestamp": firebase.default.firestore.FieldValue.serverTimestamp()
+    });
 
   }
 
@@ -112,6 +119,7 @@ export class GroupService {
     let updatedObj = {};
     updatedObj["members"] = {};
     updatedObj["members"][memberName] = firebase.default.firestore.FieldValue.delete();
+    updatedObj["members"][memberName] = firebase.default.firestore.FieldValue.delete();
 
     return this.db.doc<any>('groups/' + groupId).set(updatedObj, { merge: true });
 
@@ -122,7 +130,8 @@ export class GroupService {
 
     let updatedObj = {};
 
-    updatedObj["members." + memberName + ".tasksStatuses." + taskId + ".status"] = newStatus;
+    // updatedObj["members." + memberName + ".tasksStatuses." + taskId + ".status"] = newStatus;
+    updatedObj["membersTasksStatuses." + memberName + "." + taskId + ".status"] = newStatus;
 
     let countDelta = 0;
     switch (newStatus) {
@@ -155,8 +164,7 @@ export class GroupService {
 
     let updatedObj = {};
     updatedObj[("members." + memberName)] = {
-      // "name": memberName,
-      "isTaskDone": false
+      name: memberName
     };
 
     return this.db.doc<Group>('groups/' + groupId).update(updatedObj);

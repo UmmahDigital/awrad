@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Group } from 'src/app/entities/entities';
+import { Group } from 'src/app/entities/group';
 
 @Component({
   selector: 'app-edit-group-details',

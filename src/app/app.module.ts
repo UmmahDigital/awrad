@@ -58,6 +58,7 @@ import { NewTaskComponent } from './dialog/new-task/new-task.component';
 import { GroupComponent } from './pages/group/group-dashboard/group-types/sametask/group.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { TasksComponent } from './shared/tasks/tasks.component';
+import { TaskComponent } from './shared/task/task.component';
 
 
 const routes: Routes = [
@@ -114,7 +115,8 @@ const routes: Routes = [
     NewTaskComponent,
     GroupComponent,
     LoadingComponent,
-    TasksComponent
+    TasksComponent,
+    TaskComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Group, NUM_OF_AJZA } from './entities/entities';
+import { Group } from './entities/group';
 
 @Injectable({
   providedIn: 'root'

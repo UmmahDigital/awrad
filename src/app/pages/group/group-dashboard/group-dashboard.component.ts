@@ -26,7 +26,7 @@ import { Group } from 'src/app/entities/group';
 })
 export class GroupDashboardComponent implements OnInit {
 
-  @ViewChild(GroupComponent) sameTaskGroupChildComponent: GroupComponent;
+  @ViewChild(GroupComponent) groupChildComponent: GroupComponent;
 
   group;// : Group_Sequential | Group_SameTask;
 

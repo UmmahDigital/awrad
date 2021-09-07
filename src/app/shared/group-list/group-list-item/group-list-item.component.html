@@ -4,11 +4,11 @@
 
         {{group.title}}
 
-        <div class="progress" dir="ltr">
+        <div *ngIf="progress" class="progress" dir="ltr">
 
-            <div class="done" [style]="'flex:' + progress?.done"></div>
-            <div class="booked" [style]="'flex:' + progress?.booked"></div>
-            <div class="idle" [style]="'flex:' + progress?.idle"></div>
+            <div class="done" [style]="'flex:' + progress[TASK_STATUS.DONE]"></div>
+            <div class="doing" [style]="'flex:' + progress[TASK_STATUS.DOING]"></div>
+            <div class="todo" [style]="'flex:' + progress[TASK_STATUS.TODO]"></div>
 
         </div>
 
