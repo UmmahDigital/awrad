@@ -5,6 +5,8 @@ import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { GroupService } from 'src/app/group.service';
 import { AlertService } from 'src/app/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { TasksComposerComponent } from 'src/app/shared/tasks-composer/tasks-composer.component';
 
 
 @Component({
@@ -25,7 +27,8 @@ export class CreateGroupComponent implements OnInit {
     private router: Router,
     private alert: AlertService,
     private localDB: LocalDatabaseService,
-    private _formBuilder: FormBuilder) { }
+    private _formBuilder: FormBuilder,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -51,7 +54,6 @@ export class CreateGroupComponent implements OnInit {
 
       this.alert.show("تمّ إنشاء مجموعة الأوراد بنجاح!", 5000);
 
-
       this.localDB.joinGroup(groupId, author);
 
       this.router.navigateByUrl('/group/' + groupId + '/invite');
@@ -59,6 +61,23 @@ export class CreateGroupComponent implements OnInit {
     });
   }
 
+
+  openTasksComposer() {
+    const dialogRef = this.dialog.open(TasksComposerComponent, {
+      data: [],
+      width: "80%",
+      height: "80%",
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+
+
+      }
+
+    });
+  }
 
 
 }

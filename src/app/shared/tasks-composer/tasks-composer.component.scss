@@ -1,30 +1,30 @@
 @import "src/_variables";
 
 .dragdrop-wrapper {
-    width: 450px;
     max-width: 100%;
-    border: solid 1px #eee;
-    min-height: 65px;
+    // border: solid 1px #eee;
+    // min-height: 65px;
     display: block;
-    background: white;
-    border-radius: 3px;
+    // background: white;
+    // border-radius: 3px;
     overflow: hidden;
-    background-color: #ffffff;
-    margin: 20px auto;
+    // background-color: #ffffff;
+    // margin: 20px auto;
   }
   
   .dragdrop-inner {
-    padding: 22px 12px;
-    color: rgba(0, 0, 0, 0.87);
-    border-bottom: solid 1px #eee;
+    // padding: 22px 12px;
+    border: solid 1px #eee;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
     cursor: move;
-    background: white;
-    font-size: 14px;
+    // background: white;
+    // font-size: 14px;
+    padding: 16px 8px;
+    margin-bottom: 8px;
   }
   
   .cdk-drag-preview {
@@ -43,10 +43,6 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
   
-  .dragdrop-inner:last-child {
-    border: none;
-  }
-  
   .dragdrop-wrapper.cdk-drop-list-dragging 
   .dragdrop-inner:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -54,16 +50,40 @@
 
 
 
-    form {
-        display: flex;
-        flex-direction: row;
+form {
+    display: flex;
+    flex-direction: row;
 
-        button {
-            background: none;
-            border: none;
-        }
-
-        button:enabled {
-            color: $admin-color;
-        }
+    button {
+        background: none;
+        border: none;
     }
+
+    button:enabled {
+        color: $admin-color;
+    }
+}
+
+.task{
+
+  position: relative;
+
+
+  .drag-handler{
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 20%;
+    background: lightgray;
+    color:gray;
+    position:absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .task-order{
+    color: gray;
+  }
+}

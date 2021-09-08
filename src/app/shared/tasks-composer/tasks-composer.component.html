@@ -1,22 +1,46 @@
-<form (ngSubmit)="addTask(newTaskTitle)" #addTaskForm="ngForm" class="center-center">
+<h1 mat-dialog-title>
+    <form (ngSubmit)="addTask(newTaskTitle)" #addTaskForm="ngForm" class="center-center">
 
-    <div style="width: 80%;">
+        <div style="width: 80%;">
 
-        <mat-form-field class="block">
-            <mat-label>المهمّة:</mat-label>
-            <input matInput [(ngModel)]="newTaskTitle" name="newTaskTitle" required="true" autocomplete="off">
-        </mat-form-field>
+            <mat-form-field class="block">
+                <mat-label>المهمّة:</mat-label>
+                <input matInput [(ngModel)]="newTaskTitle" name="newTaskTitle" required="true" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div style="width: 20%;">
+            <button type="submit" [disabled]="!addTaskForm.form.valid">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </form>
+</h1>
+
+<div mat-dialog-content>
+
+    <div *ngIf="_tasks" cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper">
+        <div *ngFor="let task of _tasks; let i = index" class="dragdrop-inner task" cdkDrag>
+
+            <!-- <span class="task-order">{{i+1}} - </span> -->
+            <input matInput [(ngModel)]="task.title" autocomplete="off">
+
+            <div class="drag-handler">
+                <mat-icon>drag_indicator</mat-icon>
+            </div>
+
+
+
+
+        </div>
+
+
+
     </div>
+</div>
 
-    <div style="width: 20%;">
-        <button type="submit" [disabled]="!addTaskForm.form.valid">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
-
-</form>
-
-
-<div cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper">
-    <div class="dragdrop-inner" *ngFor="let task of _tasks" cdkDrag> {{task.title}} </div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onDismiss()">الغاء</button>
+    <button mat-raised-button color="primary" class="app-btn-primary" (click)="onConfirm()">حفظ</button>
 </div>
