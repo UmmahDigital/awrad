@@ -44,3 +44,15 @@ section > header {
     }
   }
 }
+
+.mat-vertical-content-container{
+  margin-right: 0!important;
+}
+
+.mat-vertical-stepper-header .mat-step-icon{
+  margin-right: -36px!important;
+}
+
+.mat-step-header{
+  overflow: visible!important;
+}

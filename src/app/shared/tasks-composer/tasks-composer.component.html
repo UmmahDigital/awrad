@@ -1,0 +1,22 @@
+<form (ngSubmit)="addTask(newTaskTitle)" #addTaskForm="ngForm" class="center-center">
+
+    <div style="width: 80%;">
+
+        <mat-form-field class="block">
+            <mat-label>المهمّة:</mat-label>
+            <input matInput [(ngModel)]="newTaskTitle" name="newTaskTitle" required="true" autocomplete="off">
+        </mat-form-field>
+    </div>
+
+    <div style="width: 20%;">
+        <button type="submit" [disabled]="!addTaskForm.form.valid">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+</form>
+
+
+<div cdkDropList (cdkDropListDropped)="reorderList($event)" class="dragdrop-wrapper">
+    <div class="dragdrop-inner" *ngFor="let task of _tasks" cdkDrag> {{task.title}} </div>
+</div>

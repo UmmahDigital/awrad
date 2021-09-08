@@ -3,13 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
 
 import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -59,6 +60,7 @@ import { GroupComponent } from './pages/group/group-dashboard/group-types/sameta
 import { LoadingComponent } from './shared/loading/loading.component';
 import { TasksComponent } from './shared/tasks/tasks.component';
 import { TaskComponent } from './shared/task/task.component';
+import { TasksComposerComponent } from './shared/tasks-composer/tasks-composer.component';
 
 
 const routes: Routes = [
@@ -116,16 +118,19 @@ const routes: Routes = [
     GroupComponent,
     LoadingComponent,
     TasksComponent,
-    TaskComponent
+    TaskComponent,
+    TasksComposerComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     ClipboardModule,
     BrowserAnimationsModule,
+    DragDropModule,
     RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always', scrollPositionRestoration: 'enabled' }),
     MaterialModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
@@ -137,3 +142,4 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

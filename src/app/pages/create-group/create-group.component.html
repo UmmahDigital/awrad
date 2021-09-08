@@ -18,39 +18,67 @@
     </p>
 
 
-    <form (ngSubmit)="createGroup()" #createGroupForm="ngForm">
 
-        <h2>تفاصيل المجموعة</h2>
+    <mat-stepper orientation="vertical" [linear]="true">
+        <mat-step [stepControl]="groupDetailsFormGroup">
+            <form [formGroup]="groupDetailsFormGroup">
 
-        <mat-form-field appearance="fill" class="block">
-            <mat-label>عنوان المجموعة</mat-label>
-            <input matInput [(ngModel)]="title" name="title" required="true" autocomplete="off">
-        </mat-form-field>
+                <ng-template matStepLabel>تفاصيل المجموعة</ng-template>
+                <ng-template matStepContent>
 
-        <mat-form-field appearance="fill" class="block">
-            <mat-label>اسمك (مسؤول المجموعة)</mat-label>
-            <input matInput [(ngModel)]="author" name="author" required="true" autocomplete="off">
-        </mat-form-field>
+                    <mat-form-field appearance="fill" class="block">
+                        <mat-label>عنوان المجموعة</mat-label>
+                        <input matInput formControlName="title" required="true" autocomplete="off">
+                    </mat-form-field>
 
-
-        <mat-form-field appearance="fill" class="block">
-            <mat-label>نص إضافي (اختياري)</mat-label>
-            <textarea rows="4" matInput [(ngModel)]="description" name="description"></textarea>
-        </mat-form-field>
+                    <mat-form-field appearance="fill" class="block">
+                        <mat-label>اسمك (مسؤول المجموعة)</mat-label>
+                        <input matInput formControlName="author" required="true" autocomplete="off">
+                    </mat-form-field>
 
 
+                    <mat-form-field appearance="fill" class="block">
+                        <mat-label>وصف المجموعة (اختياري)</mat-label>
+                        <textarea rows="4" matInput formControlName="description"></textarea>
+                    </mat-form-field>
 
-        <button type="submit" class="block large action-btn" mat-raised-button
-            color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">
-
-
-            إنشاء المجموعة
-
-
-
-        </button>
-
-    </form>
+                    <button mat-button matStepperNext>التالي</button>
 
 
+                </ng-template>
+            </form>
+
+        </mat-step>
+
+
+        <mat-step>
+            <ng-template matStepLabel>المهام</ng-template>
+            <ng-template matStepContent>
+
+
+                <app-tasks-composer></app-tasks-composer>
+
+                <button mat-button matStepperPrevious type="button">السابق</button>
+                <button mat-button matStepperNext type="button">التالي</button>
+            </ng-template>
+        </mat-step>
+
+
+        <mat-step>
+            <ng-template matStepLabel>إنشاء المجموعة</ng-template>
+
+            <!-- <button type="submit" class="block large action-btn" mat-raised-button
+                color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">
+                إنشاء المجموعة
+            </button> -->
+
+            <button type="submit" class="block large action-btn" mat-raised-button (click)="createGroup()"> إنشاء
+                المجموعة</button>
+
+
+            <button mat-button matStepperPrevious type="button">السابق</button>
+        </mat-step>
+
+
+    </mat-stepper>
 </section>

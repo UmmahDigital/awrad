@@ -4,6 +4,7 @@ import { LocalDatabaseService } from 'src/app/local-database.service';
 import { GoogleAnalyticsService } from 'ngx-google-analytics';
 import { GroupService } from 'src/app/group.service';
 import { AlertService } from 'src/app/alert.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,39 +18,32 @@ export class CreateGroupComponent implements OnInit {
 
   @Output() groupCreated = new EventEmitter<object>();
 
-  title: string;
-  description: string;
-  author: string;
-
-
-  typeParam: string;
-
-  isRecurring = true;
+  groupDetailsFormGroup: FormGroup;
 
   constructor(private $gaService: GoogleAnalyticsService,
     private groupsApi: GroupService,
     private router: Router,
     private alert: AlertService,
     private localDB: LocalDatabaseService,
-    private route: ActivatedRoute) { }
+    private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
-    this.route.queryParams.subscribe(params => {
-      this.typeParam = params['type'];
-
-      if (!this.typeParam) {
-        return;
-      }
-
+    this.groupDetailsFormGroup = this._formBuilder.group({
+      title: ['', Validators.required],
+      author: ['', Validators.required],
+      description: ['', '']
     });
 
   }
 
   createGroup() {
 
+    let title = this.groupDetailsFormGroup.controls['title'].value;
+    let description = this.groupDetailsFormGroup.controls['description'].value;
+    let author = this.groupDetailsFormGroup.controls['author'].value;
 
-    this.groupsApi.createGroup(this.title, this.description, this.author).then(docRef => {
+    this.groupsApi.createGroup(title, description, author).then(docRef => {
 
       const groupId = docRef.id;
 
@@ -58,10 +52,9 @@ export class CreateGroupComponent implements OnInit {
       this.alert.show("تمّ إنشاء مجموعة الأوراد بنجاح!", 5000);
 
 
-      this.localDB.joinGroup(groupId, this.author);
+      this.localDB.joinGroup(groupId, author);
 
       this.router.navigateByUrl('/group/' + groupId + '/invite');
-
 
     });
   }
