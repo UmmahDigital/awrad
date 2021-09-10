@@ -5,7 +5,7 @@ export const TASK_STATUS = {
 };
 
 export class TaskStatus {
-    groupTaskId: string;
+    groupTaskId: number;
     status: number; // TASK_STATUS
 
     public constructor(init?: Partial<TaskStatus>) {
@@ -13,6 +13,11 @@ export class TaskStatus {
     }
 
     public static getNextStatus(status: number) {
-        return TASK_STATUS[(status + 1) % Object.keys(TASK_STATUS).length];
+
+        if (typeof status != 'number') {
+            status = TASK_STATUS.TODO;
+        }
+
+        return (status + 1) % Object.keys(TASK_STATUS).length;
     }
 }

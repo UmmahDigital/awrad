@@ -14,22 +14,32 @@ export class Group {
     totalDoneTasks: number;
     lastGeneratedTaskId: number;
 
-    tasks: Record<string, GroupTask>;
+    tasks: Record<number, GroupTask>;
     members: Record<string, GroupMember>;
-    membersTasksStatuses: Record<string, Record<string, TaskStatus>>;
+    membersTasksStatuses: Record<string, Record<number, TaskStatus>>;
 
     public constructor(init: Partial<Group>) {
         Object.assign(this, init);
         this.cycle = init.cycle || 0;
         // this.members = this._createMembersArray(this.members);//Object.values(init.members).sort((m1, m2) => (m1.name > m2.name ? 1 : -1));
 
-        this._initMembersTasksStatuses();
+        this._initMembersAndTasksStatuses();
+        this._initTasks();
 
     }
 
-    private _initMembersTasksStatuses() {
-        Object.keys(this.membersTasksStatuses).forEach((memberName) => {
-            this.members[memberName].setTasksStatuses(this.membersTasksStatuses[memberName]);
+    private _initMembersAndTasksStatuses() {
+
+        Object.keys(this.members).forEach((memberName) => {
+            this.members[memberName] = new GroupMember({ name: memberName });
+            this.members[memberName].setTasksStatuses(this.membersTasksStatuses[memberName] || {});
+        });
+
+    }
+
+    private _initTasks() {
+        Object.keys(this.tasks).forEach((taskId) => {
+            this.tasks[taskId] = new GroupTask(this.tasks[taskId]);
         });
     }
 
@@ -115,7 +125,7 @@ export class Group {
 
         Object.values(newTasks).forEach(newTask => {
             if (!newTask.id) {
-                newTask.id = this._getNewTaskId().toString();
+                newTask.id = this._getNewTaskId();
             }
         });
 

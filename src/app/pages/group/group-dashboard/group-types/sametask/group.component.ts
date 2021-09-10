@@ -36,6 +36,8 @@ export class GroupComponent implements OnInit, OnChanges {
   isMembersListEditMode = false;
   showGroupMembers = true;
 
+  tasks;
+
   myMember;
   progress;
   totalDoneTasks;
@@ -77,9 +79,9 @@ export class GroupComponent implements OnInit, OnChanges {
 
     let newStatusTitle = "task_done";
     switch (newTaskStatus.status) {
-      case TASK_STATUS.DONE: newStatusTitle = "task_done"; break;
-      case TASK_STATUS.DOING: newStatusTitle = "task_done"; break;
-      case TASK_STATUS.TODO: newStatusTitle = "task_done"; break;
+      case TASK_STATUS.DONE: newStatusTitle = "task_status_done"; break;
+      case TASK_STATUS.DOING: newStatusTitle = "task_status_doing"; break;
+      case TASK_STATUS.TODO: newStatusTitle = "task_status_todo"; break;
     }
     this.$gaService.event(newStatusTitle, 'tasks', this.group.getTask(newTaskStatus.groupTaskId).title);
 

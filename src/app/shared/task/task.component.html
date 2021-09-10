@@ -1,4 +1,3 @@
-<mat-card (click)="toggled()">
-    {{status}}
+<mat-card (click)="toggled()" [class]="'status-'+status">
     <ng-content select="[content]"></ng-content>
 </mat-card>

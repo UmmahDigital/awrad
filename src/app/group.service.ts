@@ -44,7 +44,8 @@ export class GroupService {
 
     this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: any) => {
 
-      this._currentGroupObj = group;
+      this._currentGroupObj = new Group(group);
+
       this._currentGroup.next(this._currentGroupObj);
 
     });
@@ -62,7 +63,7 @@ export class GroupService {
   }
 
 
-  public createGroup(title, description, author) {
+  public createGroup(title, description, author, tasks: GroupTask[]) {
 
     let newGroup = new Group({
       "title": title,
@@ -70,15 +71,13 @@ export class GroupService {
       "author": author,
       "cycle": 0,
       "totalDoneTasks": 0,
-      "lastGeneratedTaskId": -1,
-      "tasks": {},
+      "lastGeneratedTaskId": tasks.length,
+      "tasks": GroupTask.array2Obj(tasks),
       "members": {},
       "membersTasksStatuses": {},
     });
 
     newGroup["members"][author] = new GroupMember({ name: author });
-
-
 
     return this.db.collection('groups').add({
       ...newGroup.toObj(),
@@ -136,7 +135,7 @@ export class GroupService {
 
   }
 
-  updateMemberTask(groupId: string, memberName: string, taskId: string, newStatus: number) {
+  updateMemberTask(groupId: string, memberName: string, taskId: number, newStatus: number) {
 
     let updatedObj = {};
 

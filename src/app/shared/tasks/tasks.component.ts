@@ -18,7 +18,6 @@ export class TasksComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
   taskToggled(task: GroupTask, newStatus: number) {

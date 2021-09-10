@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TasksComposerComponent } from 'src/app/shared/tasks-composer/tasks-composer.component';
+import { GroupTask } from 'src/app/entities/group-task';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class CreateGroupComponent implements OnInit {
     this.groupDetailsFormGroup = this._formBuilder.group({
       title: ['', Validators.required],
       author: ['', Validators.required],
-      description: ['', '']
+      description: ['', ''],
+      tasks: ['', Validators.required]
     });
 
   }
@@ -45,8 +47,11 @@ export class CreateGroupComponent implements OnInit {
     let title = this.groupDetailsFormGroup.controls['title'].value;
     let description = this.groupDetailsFormGroup.controls['description'].value;
     let author = this.groupDetailsFormGroup.controls['author'].value;
+    let tasksText = this.groupDetailsFormGroup.controls['tasks'].value;
 
-    this.groupsApi.createGroup(title, description, author).then(docRef => {
+    let tasks = this.text2TaskList(tasksText);
+
+    this.groupsApi.createGroup(title, description, author, tasks).then(docRef => {
 
       const groupId = docRef.id;
 
@@ -61,23 +66,44 @@ export class CreateGroupComponent implements OnInit {
     });
   }
 
+  text2TaskList(text: string): GroupTask[] {
 
-  openTasksComposer() {
-    const dialogRef = this.dialog.open(TasksComposerComponent, {
-      data: [],
-      width: "80%",
-      height: "80%",
-    });
+    let tasks: GroupTask[] = [];
+    let lines = text.split(/\r?\n/);
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    lines.forEach((line, index) => {
 
-      if (dialogResult) {
+      line = line.trim();
 
-
+      if (line) {
+        tasks.push(new GroupTask({
+          id: index,
+          title: line
+        }));
       }
 
     });
+
+    return tasks;
   }
+
+
+  // openTasksComposer() {
+  //   const dialogRef = this.dialog.open(TasksComposerComponent, {
+  //     data: [],
+  //     width: "80%",
+  //     height: "80%",
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(dialogResult => {
+
+  //     if (dialogResult) {
+
+
+  //     }
+
+  //   });
+  // }
 
 
 }

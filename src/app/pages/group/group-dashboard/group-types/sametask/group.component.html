@@ -2,9 +2,8 @@
 
     <!-- <header>المهمّة الحاليّة </header> -->
 
-
-
-    <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.tasksStatuses" (onToggled)="taskToggled($event)">
+    <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.getTasksStatuses()"
+        (onToggled)="taskToggled($event)">
     </app-tasks>
 
 

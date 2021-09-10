@@ -26,6 +26,10 @@ export class GroupMember {
         this._tasksStatuses[taskId].status = newStatus;
     }
 
+    public setTasksStatuses(tasksStatuses: Record<string, TaskStatus>) {
+        this._tasksStatuses = tasksStatuses;
+    }
+
     public getTasksStatuses() {
         return this._tasksStatuses;
     }
@@ -34,9 +38,7 @@ export class GroupMember {
         delete this._tasksStatuses[taskId];
     }
 
-    public setTasksStatuses(tasksStatuses: Record<string, TaskStatus>) {
-        this._tasksStatuses = tasksStatuses;
-    }
+
 }
 
 

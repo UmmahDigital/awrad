@@ -1,0 +1,17 @@
+@import "src/_variables";
+
+
+mat-card.status-0 {
+    background: $status-todo-bg-color;
+    color:$status-todo-color
+}
+
+mat-card.status-1 {
+    background: $status-doing-bg-color;
+    color:$status-doing-color
+}
+
+mat-card.status-2 {
+    background: $status-done-bg-color;
+    color:$status-done-color
+}

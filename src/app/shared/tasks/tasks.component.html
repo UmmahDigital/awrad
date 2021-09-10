@@ -1,3 +1,3 @@
-<app-task *ngFor="let task of tasks" [status]="tasksStatuses[task.id]" (onToggled)="taskToggled(task,$event)">
-    <div content> {{task.title}} </div>
+<app-task *ngFor="let task of tasks" [status]="tasksStatuses[task.id]?.status" (onToggled)="taskToggled(task,$event)">
+    <div content> {{task?.title}} </div>
 </app-task>

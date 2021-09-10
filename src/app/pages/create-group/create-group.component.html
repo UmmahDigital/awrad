@@ -33,10 +33,19 @@
 
         <mat-form-field appearance="fill" class="block">
             <mat-label>وصف المجموعة (اختياري)</mat-label>
-            <textarea rows="4" matInput formControlName="description"></textarea>
+            <textarea rows="3" matInput formControlName="description"></textarea>
         </mat-form-field>
 
-        <button mat-raised-button (click)="openTasksComposer()" type="button">اختيار المهام</button>
+        <!-- <button mat-raised-button (click)="openTasksComposer()" type="button">اختيار المهام</button> -->
+
+
+        <h2>أوراد المجموعة</h2>
+        <p>الرجاء إدخال كل ورد في سطر جديد. يمكنك لاحقا تعديل قائمة الأوراد.</p>
+
+        <mat-form-field appearance="fill" class="block">
+            <mat-label>الأوراد الأولى</mat-label>
+            <textarea rows="7" matInput formControlName="tasks" required></textarea>
+        </mat-form-field>
 
 
         <button type="submit" class="block large action-btn" mat-raised-button
