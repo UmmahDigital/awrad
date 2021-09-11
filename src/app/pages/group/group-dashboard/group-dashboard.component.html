@@ -30,154 +30,173 @@
 
     </header>
 
-    <section *ngIf="isAdmin" class="admin-tools">
-        <mat-expansion-panel [expanded]="adminPanelOpen">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <mat-icon>verified</mat-icon>
-                    <span>
-                        أدوات مسؤول المجموعة
-                    </span>
-                </mat-panel-title>
 
-            </mat-expansion-panel-header>
-
-
-            <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
-                <mat-icon>format_list_numbered_rtl</mat-icon>
-                <span>مشاركة وضع المجموعة</span>
-            </button>
-
-            <button mat-flat-button (click)="shareStatusMsgWhatsapp(); adminPanelOpen=false;" class="whatsapp-btn">
-                <mat-icon>format_list_numbered_rtl</mat-icon>
-                <span>مشاركة وضع المجموعة - وتسأب</span>
-            </button>
-
-            <!-- whatsapp direct share? -->
+    <mat-tab-group mat-stretch-tabs>
 
 
 
-            <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
-                <mat-icon>sports_score</mat-icon>
-                <span>تعديل المهمّات الحاليّة</span>
-            </button>
+        <mat-tab label="أورادي">
+
+            <section id="group" class="group-container">
+
+                <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
 
 
-            <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
-                <mat-icon>sports_score</mat-icon>
-                <span>نفس المهمّات من جديد</span>
-            </button>
-
-            <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
-                <mat-icon>sports_score</mat-icon>
-                <span>مهمّات جديدة</span>
-            </button>
+                <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.getTasksStatuses()"
+                    (onToggled)="taskToggled($event)">
+                </app-tasks>
 
 
+                <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم:
+                    {{this.group.targetDate}}.</span>
 
 
+            </section>
 
 
-            <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;">
-                <mat-icon>edit</mat-icon>
-                <span>تعديل تفاصيل المجموعة</span>
-            </button>
+        </mat-tab>
 
 
-            <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;">
-                <mat-icon>link</mat-icon>
-                مشاركة رابط المجموعة
-            </button>
+        <mat-tab label="المجموعة">
 
 
-        </mat-expansion-panel>
-    </section>
+            <app-group-progress [current]="progress[TASK_STATUS.DONE]" style="margin-top: 32px;"
+                [target]="progress?.total">
+            </app-group-progress>
 
 
-    <section class="block user-msg">
-
-        <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
-
-    </section>
+            <section *ngIf="showGroupMembers">
 
 
+                <header>
+                    أعضاء المجموعة ({{group.members.length}})
+                </header>
 
-    <section id="group" *ngIf="group" class="group-container">
+                <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
 
+                    <div class="tip">
+                        <strong>لمسؤول المجموعة:</strong>
 
-        <!-- <app-group [group]="group" [userWatch$]="userWatch$" [isAdmin]="isAdmin" [username]="username"
-            (onAchievement)="celebrate($event)">
-        </app-group> -->
+                        يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
+                        على كبسة التعديل أدناه.
+                    </div>
 
-
-        <section>
-
-            <!-- <header>المهمّة الحاليّة </header> -->
-
-            <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.getTasksStatuses()"
-                (onToggled)="taskToggled($event)">
-            </app-tasks>
-
-
-            <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم: {{this.group.targetDate}}.</span>
-
-
-        </section>
-
-
-        <app-group-progress [current]="progress[TASK_STATUS.DONE]" style="margin-top: 32px;" [target]="progress?.total">
-        </app-group-progress>
-
-
-        <section *ngIf="showGroupMembers">
-
-
-            <header>
-                أعضاء المجموعة ({{group.members.length}})
-            </header>
-
-            <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
-
-                <div class="tip">
-                    <strong>لمسؤول المجموعة:</strong>
-
-                    يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
-                    على كبسة التعديل أدناه.
+                    <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
+                        (click)="isMembersListEditMode = !isMembersListEditMode">
+                        <mat-icon>edit</mat-icon>
+                    </mat-button-toggle>
                 </div>
 
-                <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
-                    (click)="isMembersListEditMode = !isMembersListEditMode">
+
+
+
+
+                <app-group-members [members]="this.group.getMembers()" [isEditMode]="isMembersListEditMode"
+                    (onMemberRemove)="removeGroupMember($event)" (onMemberAdd)="addGroupMember($event)">
+                </app-group-members>
+
+
+
+
+                <!-- (onMemberClick)="toggleMemberTaskState($event)" -->
+
+            </section>
+
+
+            <div class="spacer"></div>
+
+
+            <section class="center-center big-counter" *ngIf="group.cycle > 0">
+                <label class="number">{{totalDoneTasks}}</label>
+                <span class="text">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم إن شاء
+                    الله!</span>
+            </section>
+
+
+        </mat-tab>
+
+
+
+        <mat-tab *ngIf="isAdmin" label="إدارة المجموعة">
+            <section *ngIf="isAdmin" class="admin-tools">
+
+                <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
+                    <mat-icon>format_list_numbered_rtl</mat-icon>
+                    <span>مشاركة وضع المجموعة</span>
+                </button>
+
+                <button mat-flat-button (click)="shareStatusMsgWhatsapp(); adminPanelOpen=false;" class="whatsapp-btn">
+                    <mat-icon>format_list_numbered_rtl</mat-icon>
+                    <span>مشاركة وضع المجموعة - وتسأب</span>
+                </button>
+
+                <!-- whatsapp direct share? -->
+
+
+
+                <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                    <mat-icon>sports_score</mat-icon>
+                    <span>تعديل المهمّات الحاليّة</span>
+                </button>
+
+
+                <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                    <mat-icon>sports_score</mat-icon>
+                    <span>نفس المهمّات من جديد</span>
+                </button>
+
+                <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                    <mat-icon>sports_score</mat-icon>
+                    <span>مهمّات جديدة</span>
+                </button>
+
+
+
+
+
+
+                <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;">
                     <mat-icon>edit</mat-icon>
-                </mat-button-toggle>
-            </div>
+                    <span>تعديل تفاصيل المجموعة</span>
+                </button>
+
+
+                <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;">
+                    <mat-icon>link</mat-icon>
+                    مشاركة رابط المجموعة
+                </button>
+
+                <!--                 
+                <mat-expansion-panel [expanded]="adminPanelOpen">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon>verified</mat-icon>
+                            <span>
+                                أدوات مسؤول المجموعة
+                            </span>
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+
+
+                    
+
+
+                </mat-expansion-panel> -->
+            </section>
+        </mat-tab>
+    </mat-tab-group>
 
 
 
 
 
-            <app-group-members [members]="this.group.getMembers()" [isEditMode]="isMembersListEditMode"
-                (onMemberRemove)="removeGroupMember($event)" (onMemberAdd)="addGroupMember($event)">
-            </app-group-members>
 
 
 
 
-            <!-- (onMemberClick)="toggleMemberTaskState($event)" -->
-
-        </section>
 
 
-        <div class="spacer"></div>
-
-
-        <section class="center-center big-counter" *ngIf="group.cycle > 0">
-            <label class="number">{{totalDoneTasks}}</label>
-            <span class="text">أعمال طيّبة قمتم بها في هذه المجموعة منذ تأسيسها. في ميزان حسناتكم إن شاء الله!</span>
-        </section>
-
-
-
-    </section>
 
 
 
