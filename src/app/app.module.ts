@@ -56,7 +56,6 @@ import { CommonModule } from '@angular/common';
 import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
 import { NewTaskComponent } from './dialog/new-task/new-task.component';
-import { GroupComponent } from './pages/group/group-dashboard/group-types/sametask/group.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { TasksComponent } from './shared/tasks/tasks.component';
 import { TaskComponent } from './shared/task/task.component';
@@ -115,7 +114,6 @@ const routes: Routes = [
     TodoComponent,
     GroupMembersComponent,
     NewTaskComponent,
-    GroupComponent,
     LoadingComponent,
     TasksComponent,
     TaskComponent,

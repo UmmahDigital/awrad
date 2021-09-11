@@ -40,9 +40,9 @@ export class GroupService {
 
   public setCurrentGroup(groupId: string) {
 
-    this.groupsDocs[groupId] = this.db.doc<any>('groups/' + groupId); // any should be `Group` after change stabilyzes 
+    this.groupsDocs[groupId] = this.db.doc<Group>('groups/' + groupId); // any should be `Group` after change stabilyzes 
 
-    this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: any) => {
+    this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: Group) => {
 
       this._currentGroupObj = new Group(group);
 
@@ -56,10 +56,6 @@ export class GroupService {
 
   public getCurrentGroup() {
     return this._currentGroup;
-  }
-
-  public getCurrentGroupId() {
-    return this._currentGroupObj.id;
   }
 
 
