@@ -38,6 +38,22 @@ export class GroupMember {
         delete this._tasksStatuses[taskId];
     }
 
+    public getProgress() {
+
+        let counters = {};
+        counters[TASK_STATUS.DOING] = 0;
+        counters[TASK_STATUS.DONE] = 0;
+
+        Object.values(this._tasksStatuses).forEach(taskStatus => {
+            counters[taskStatus.status]++;
+        });
+
+        // counters[TASK_STATUS.TODO] = counters['total'] - counters[TASK_STATUS.DOING] - counters[TASK_STATUS.DONE];
+
+        return counters;
+
+    }
+
 
 }
 

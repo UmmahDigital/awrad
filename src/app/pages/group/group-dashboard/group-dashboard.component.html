@@ -39,7 +39,10 @@
 
             <section id="group" class="group-container">
 
-                <span> السلام عليكم يا <strong>{{username}}</strong>، </span>
+                <span> السلام عليك يا <strong>{{username}}</strong>،
+                    <br />
+                    هذه أورادك الحاليّة في المجموعة:
+                </span>
 
 
                 <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.getTasksStatuses()"

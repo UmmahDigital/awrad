@@ -1,0 +1,16 @@
+<a class="member-list-item-link">
+
+    <div class="member-list-item mat-elevation-z1">
+
+        {{member.name}}
+
+        <div *ngIf="progress" class="progress" dir="ltr">
+
+            <div class="done" [style]="'flex:' + progress[TASK_STATUS.DONE]"></div>
+            <div class="doing" [style]="'flex:' + progress[TASK_STATUS.DOING]"></div>
+            <div class="todo" [style]="'flex:' + progress[TASK_STATUS.TODO]"></div>
+
+        </div>
+
+    </div>
+</a>
