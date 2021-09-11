@@ -1,3 +1,11 @@
-<mat-card (click)="toggled()" [class]="'status-'+status">
-    <ng-content select="[content]"></ng-content>
+<mat-card (click)="toggled()" [class]="'status-'+status" [ngSwitch]="status">
+
+    <mat-icon *ngSwitchCase="TASK_STATUS.TODO"> check_box_outline_blank </mat-icon>
+    <mat-icon *ngSwitchCase="TASK_STATUS.DOING"> check_box_outline_blank </mat-icon>
+    <mat-icon *ngSwitchCase="TASK_STATUS.DONE"> done </mat-icon>
+
+
+    <div class="task-title">
+        <ng-content select="[content]"></ng-content>
+    </div>
 </mat-card>

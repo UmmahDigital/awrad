@@ -43,14 +43,9 @@ export class GroupComponent implements OnInit, OnChanges {
   totalDoneTasks;
 
   constructor(private groupsApi: GroupService,
-    private localDB: LocalDatabaseService,
     private dialog: MatDialog,
     private $gaService: GoogleAnalyticsService,
-    private titleService: Title,
-    private alert: AlertService,
-    private nativeApi: NativeApiService,
-    private nativeShare: NativeShareService,
-    private router: Router,) {
+    private alert: AlertService,) {
 
 
   }
@@ -86,36 +81,6 @@ export class GroupComponent implements OnInit, OnChanges {
     this.$gaService.event(newStatusTitle, 'tasks', this.group.getTask(newTaskStatus.groupTaskId).title);
 
   }
-
-
-  // updateTask(newTask) {
-
-  //   let tmpGroup = (<Group>this.group);
-  //   tmpGroup.resetMembersTaskStatus();
-
-  //   let membersObj = tmpGroup.getMembersObj();
-
-  //   this.groupsApi.updateGroupTask(this.group.id, newTask, this.group.cycle, membersObj);
-
-  //   this.$gaService.event('new_task', 'tasks', newTask);
-
-  // }
-
-
-  // toggleMemberTaskState(member: GroupMember) {
-
-  //   if (!this.isAdmin) {
-  //     return;
-  //   }
-
-  //   member.isTaskDone = !member.isTaskDone;
-  //   this.groupsApi.updateMemberTask(this.group.id, member.name, member.isTaskDone);
-
-
-  //   this.$gaService.event(member.isTaskDone ? 'task_done' : 'task_undone', 'tasks', (<Group>this.group).task);
-
-
-  // }
 
   removeGroupMember(member: GroupMember) {
 

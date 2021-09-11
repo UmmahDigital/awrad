@@ -1,9 +1,17 @@
 @import "src/_variables";
 
+mat-card{
+    display: flex;
+
+    mat-icon{
+        margin-inline-start: 8px;
+        text-decoration: none!important;
+    }
+}
 
 mat-card.status-0 {
-    background: $status-todo-bg-color;
-    color:$status-todo-color
+    background: white;//$status-todo-bg-color;
+    //color:$status-todo-color
 }
 
 mat-card.status-1 {
@@ -13,5 +21,9 @@ mat-card.status-1 {
 
 mat-card.status-2 {
     background: $status-done-bg-color;
-    color:$status-done-color
+    color:$status-done-color;
+
+    .task-title{
+        text-decoration: line-through;
+    }
 }

@@ -28,7 +28,7 @@ export class GroupDashboardComponent implements OnInit {
 
   @ViewChild(GroupComponent) groupChildComponent: GroupComponent;
 
-  group;// : Group_Sequential | Group_SameTask;
+  group: Group;
 
 
   username: string;

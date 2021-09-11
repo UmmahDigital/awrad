@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TaskStatus } from 'src/app/entities/task-status';
+import { TaskStatus, TASK_STATUS } from 'src/app/entities/task-status';
 
 @Component({
   selector: 'app-task',
@@ -10,6 +10,8 @@ export class TaskComponent implements OnInit {
 
   @Input() status: number;
   @Output() onToggled?= new EventEmitter<number>();
+
+  TASK_STATUS = TASK_STATUS;
 
   constructor() { }
 
