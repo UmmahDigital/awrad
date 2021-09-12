@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GroupMember } from 'src/app/entities/member';
+import { TASK_STATUS } from 'src/app/entities/task-status';
 
 @Component({
   selector: 'app-member-progress',
@@ -9,6 +10,8 @@ import { GroupMember } from 'src/app/entities/member';
 export class MemberProgressComponent implements OnInit {
 
   @Input() member: GroupMember;
+
+  TASK_STATUS = TASK_STATUS;
 
   progress;
 

@@ -18,6 +18,8 @@ export class Group {
     members: Record<string, GroupMember>;
     membersTasksStatuses: Record<string, Record<number, TaskStatus>>;
 
+    public membersCount = 0;
+
     public constructor(init: Partial<Group>) {
         Object.assign(this, init);
         this.cycle = init.cycle || 0;
@@ -30,10 +32,16 @@ export class Group {
 
     private _initMembersAndTasksStatuses() {
 
+        let tasks = this.getTasks();
+        let count = 0;
+
         Object.keys(this.members).forEach((memberName) => {
             this.members[memberName] = new GroupMember({ name: memberName });
-            this.members[memberName].setTasksStatuses(this.membersTasksStatuses[memberName] || {});
+            this.members[memberName].setTasksStatuses(this.membersTasksStatuses[memberName] || {}, tasks);
+            count++;
         });
+
+        this.membersCount = count;
 
     }
 
@@ -104,6 +112,10 @@ export class Group {
 
     public getTasks(): GroupTask[] {
         return Object.values(this.tasks);
+    }
+
+    public getTasksString(): string {
+        return this.getTasks().join('\r\n');
     }
 
     public getTask(id): GroupTask {

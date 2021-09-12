@@ -18,6 +18,7 @@ import { Group } from 'src/app/entities/group';
 import { TaskStatus, TASK_STATUS } from 'src/app/entities/task-status';
 import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { GroupMember } from 'src/app/entities/member';
+import { TasksEditorComponent } from 'src/app/shared/tasks-editor/tasks-editor.component';
 
 
 @Component({
@@ -253,6 +254,25 @@ export class GroupDashboardComponent implements OnInit, OnChanges {
       if (newTask) {
 
         // this.updateTask(newTask);
+
+      }
+
+    });
+
+  }
+
+
+  showTasksEditor() {
+
+    const dialogRef = this.dialog.open(TasksEditorComponent, {
+      data: this.group.getTasksString(),
+      maxWidth: "80%",
+      minHeight: "50%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
 
       }
 

@@ -1,3 +1,4 @@
+import { GroupTask } from "./group-task";
 import { TaskStatus, TASK_STATUS } from "./task-status";
 
 export class GroupMember {
@@ -26,8 +27,16 @@ export class GroupMember {
         this._tasksStatuses[taskId].status = newStatus;
     }
 
-    public setTasksStatuses(tasksStatuses: Record<string, TaskStatus>) {
+    public setTasksStatuses(tasksStatuses: Record<string, TaskStatus>, allTasks: GroupTask[]) {
         this._tasksStatuses = tasksStatuses;
+
+        allTasks.forEach(task => {
+
+            let status = tasksStatuses[task.id] ? tasksStatuses[task.id].status : TASK_STATUS.TODO;
+            this._tasksStatuses[task.id] = new TaskStatus({ groupTaskId: task.id, status: status });
+
+        });
+
     }
 
     public getTasksStatuses() {
@@ -41,6 +50,7 @@ export class GroupMember {
     public getProgress() {
 
         let counters = {};
+        counters[TASK_STATUS.TODO] = 0;
         counters[TASK_STATUS.DOING] = 0;
         counters[TASK_STATUS.DONE] = 0;
 

@@ -28,13 +28,16 @@
 
     <div *ngFor="let member of members" class="member">
 
-        <mat-card (click)="memberClicked(member)" class="member-panel"
+        <!-- <mat-card (click)="memberClicked(member)" class="member-panel"
             [ngClass]="member.isTaskDone ? 'task-done' : 'task-not-done'">
 
             <label class="name"> {{member.name}}</label>
 
-        </mat-card>
+        </mat-card> -->
 
+        <div class="member-panel">
+            <app-member-progress [member]="member"></app-member-progress>
+        </div>
         <div class="member-admin-actions center-center">
             <button>
                 <mat-icon (click)="removeMember(member)">remove_circle_outline</mat-icon>
@@ -42,10 +45,6 @@
         </div>
 
     </div>
-
-
-
-
 
 
 </section>

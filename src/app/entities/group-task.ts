@@ -13,4 +13,8 @@ export class GroupTask {
     public static array2Obj(tasks: GroupTask[]) {
         return Object.assign({}, ...tasks.map((x) => ({ [x.id]: x })));
     }
+
+    public toString = (): string => {
+        return this.title;
+    }
 }

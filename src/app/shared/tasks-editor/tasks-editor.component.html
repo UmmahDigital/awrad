@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>تعديل أوراد المجموعة</h2>
+<mat-dialog-content class="mat-typography">
+    <!-- <h3>Develop across all platforms</h3> -->
+
+
+
+    <mat-form-field appearance="fill" class="block">
+        <mat-label>أوراد المجموعة</mat-label>
+        <textarea rows="8" matInput [(ngModel)]="tasksStr" name="tasks"></textarea>
+    </mat-form-field>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>حفظ كتعديل</button>
+    <button mat-button mat-dialog-close>حفظ كأوراد جديدة</button>
+    <button mat-button mat-dialog-close>الغاء</button>
+
+
+    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>

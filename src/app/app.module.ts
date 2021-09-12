@@ -61,6 +61,7 @@ import { TasksComponent } from './shared/tasks/tasks.component';
 import { TaskComponent } from './shared/task/task.component';
 import { TasksComposerComponent } from './shared/tasks-composer/tasks-composer.component';
 import { MemberProgressComponent } from './shared/member-progress/member-progress.component';
+import { TasksEditorComponent } from './shared/tasks-editor/tasks-editor.component';
 
 
 const routes: Routes = [
@@ -119,7 +120,8 @@ const routes: Routes = [
     TasksComponent,
     TaskComponent,
     TasksComposerComponent,
-    MemberProgressComponent
+    MemberProgressComponent,
+    TasksEditorComponent
   ],
   imports: [
     CommonModule,

@@ -72,7 +72,7 @@
 
 
                 <header>
-                    أعضاء المجموعة ({{group.members.length}})
+                    أعضاء المجموعة ({{group.membersCount}})
                 </header>
 
                 <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
@@ -128,22 +128,22 @@
                     <span>مشاركة وضع المجموعة</span>
                 </button>
 
-                <button mat-flat-button (click)="shareStatusMsgWhatsapp(); adminPanelOpen=false;" class="whatsapp-btn">
+                <!-- <button mat-flat-button (click)="shareStatusMsgWhatsapp(); adminPanelOpen=false;" class="whatsapp-btn">
                     <mat-icon>format_list_numbered_rtl</mat-icon>
                     <span>مشاركة وضع المجموعة - وتسأب</span>
-                </button>
+                </button> -->
 
                 <!-- whatsapp direct share? -->
 
 
 
-                <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                <button mat-flat-button (click)="showTasksEditor(); adminPanelOpen=false;">
                     <mat-icon>sports_score</mat-icon>
-                    <span>تعديل المهمّات الحاليّة</span>
+                    <span>تعديل الأوراد</span>
                 </button>
 
 
-                <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
+                <!-- <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
                     <mat-icon>sports_score</mat-icon>
                     <span>نفس المهمّات من جديد</span>
                 </button>
@@ -151,7 +151,7 @@
                 <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
                     <mat-icon>sports_score</mat-icon>
                     <span>مهمّات جديدة</span>
-                </button>
+                </button> -->
 
 
 
