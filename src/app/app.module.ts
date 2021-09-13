@@ -55,7 +55,6 @@ import { GroupProgressComponent } from './shared/group-progress/group-progress.c
 import { CommonModule } from '@angular/common';
 import { TodoComponent } from './shared/todo/todo.component';
 import { GroupMembersComponent } from './shared/group-members/group-members.component';
-import { NewTaskComponent } from './dialog/new-task/new-task.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { TasksComponent } from './shared/tasks/tasks.component';
 import { TaskComponent } from './shared/task/task.component';
@@ -116,7 +115,6 @@ const routes: Routes = [
     GroupProgressComponent,
     TodoComponent,
     GroupMembersComponent,
-    NewTaskComponent,
     LoadingComponent,
     TasksComponent,
     TaskComponent,

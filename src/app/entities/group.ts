@@ -2,6 +2,7 @@ import { GroupTask } from "./group-task";
 import { GroupMember } from "./member";
 import { TaskStatus, TASK_STATUS } from "./task-status";
 
+
 export class Group {
     id?: string;
     title?: string;
@@ -113,7 +114,7 @@ export class Group {
     }
 
     public getTasks(): GroupTask[] {
-        return Object.values(this.tasks).sort((a, b) => { return a.title.localeCompare(b.title); });
+        return Object.values(this.tasks);//.sort((a, b) => { return a.title.localeCompare(b.title); });
     }
 
     public getTasksString(): string {
@@ -186,10 +187,7 @@ export class Group {
 
     }
 
-    public toObj() {
 
-        return JSON.parse(JSON.stringify(this));
-    }
 
     //*********************** */
 

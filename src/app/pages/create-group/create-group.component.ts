@@ -49,7 +49,7 @@ export class CreateGroupComponent implements OnInit {
     let author = this.groupDetailsFormGroup.controls['author'].value;
     let tasksText = this.groupDetailsFormGroup.controls['tasks'].value;
 
-    let tasks = this.text2TaskList(tasksText);
+    let tasks = GroupTask.textToGroupTaskList(tasksText);
 
     this.groupsApi.createGroup(title, description, author, tasks).then(docRef => {
 
@@ -64,27 +64,6 @@ export class CreateGroupComponent implements OnInit {
       this.router.navigateByUrl('/group/' + groupId + '/invite');
 
     });
-  }
-
-  text2TaskList(text: string): GroupTask[] {
-
-    let tasks: GroupTask[] = [];
-    let lines = text.split(/\r?\n/);
-
-    lines.forEach((line, index) => {
-
-      line = line.trim();
-
-      if (line) {
-        tasks.push(new GroupTask({
-          id: index,
-          title: line
-        }));
-      }
-
-    });
-
-    return tasks;
   }
 
 

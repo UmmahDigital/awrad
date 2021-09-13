@@ -12,9 +12,8 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>حفظ كتعديل</button>
-    <button mat-button mat-dialog-close>حفظ كأوراد جديدة</button>
-    <button mat-button mat-dialog-close>الغاء</button>
+    <button mat-button (click)="onConfirm()">حفط</button>
+    <button mat-button (click)="onDismiss()">الغاء</button>
 
 
     <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->

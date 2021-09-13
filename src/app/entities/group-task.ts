@@ -14,6 +14,27 @@ export class GroupTask {
         return Object.assign({}, ...tasks.map((x) => ({ [x.id]: x })));
     }
 
+    public static textToGroupTaskList(text: string): GroupTask[] {
+
+        let tasks: GroupTask[] = [];
+        let lines = text.split(/\r?\n/);
+
+        lines.forEach((line, index) => {
+
+            line = line.trim();
+
+            if (line) {
+                tasks.push(new GroupTask({
+                    id: index,
+                    title: line
+                }));
+            }
+
+        });
+
+        return tasks;
+    }
+
     public toString = (): string => {
         return this.title;
     }

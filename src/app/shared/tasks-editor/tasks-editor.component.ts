@@ -19,4 +19,11 @@ export class TasksEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onConfirm(): void {
+    this.dialogRef.close(this.tasksStr);
+  }
+
+  onDismiss(): void {
+    this.dialogRef.close(false);
+  }
 }

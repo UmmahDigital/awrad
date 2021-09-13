@@ -13,6 +13,7 @@ import { Group } from './entities/group';
 import { TaskStatus, TASK_STATUS } from './entities/task-status';
 import { GroupTask } from './entities/group-task';
 import { GroupMember } from './entities/member';
+import { toJsonObj } from './entities/helpers';
 
 
 
@@ -76,7 +77,7 @@ export class GroupService {
     newGroup["members"][author] = new GroupMember({ name: author });
 
     return this.db.collection('groups').add({
-      ...newGroup.toObj(),
+      ...toJsonObj(newGroup),
       "creationTimestamp": firebase.default.firestore.FieldValue.serverTimestamp()
     });
 
@@ -153,11 +154,11 @@ export class GroupService {
 
 
 
-  updateGroupTasks(groupId: string, updatedTasks: Record<string, GroupTask>, updatedTasksStatuses: Record<string, TaskStatus>, isNewCycle) {
+  updateGroupTasks(groupId: string, updatedTasks: Record<number, GroupTask>, updatedTasksStatuses: Record<string, Record<number, TaskStatus>>, isNewCycle) {
 
     let updatedObj = {
-      "task": updatedTasks,
-      "tasksStatuses": updatedTasksStatuses,
+      "tasks": toJsonObj(updatedTasks),
+      "tasksStatuses": toJsonObj(updatedTasksStatuses),
       "cycle": firebase.default.firestore.FieldValue.increment(isNewCycle ? 1 : 0)
     };
 

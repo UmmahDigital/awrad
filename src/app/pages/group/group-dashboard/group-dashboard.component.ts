@@ -16,9 +16,9 @@ import { GroupService } from 'src/app/group.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { Group } from 'src/app/entities/group';
 import { TaskStatus, TASK_STATUS } from 'src/app/entities/task-status';
-import { NewTaskComponent } from 'src/app/dialog/new-task/new-task.component';
 import { GroupMember } from 'src/app/entities/member';
 import { TasksEditorComponent } from 'src/app/shared/tasks-editor/tasks-editor.component';
+import { GroupTask } from 'src/app/entities/group-task';
 
 
 @Component({
@@ -239,17 +239,22 @@ export class GroupDashboardComponent implements OnInit {
     this.alert.show("تمّ إضافة  " + member.name + "  بنجاح", 2500);
   }
 
+  showTasksEditor() {
 
-  showNewTaskDialog() {
-    const dialogRef = this.dialog.open(NewTaskComponent, {
-      width: "90%"
+    let oldTasks = { ...this.group.getTasks() };
+
+    const dialogRef = this.dialog.open(TasksEditorComponent, {
+      data: this.group.getTasksString(),
+      maxWidth: "80%",
+      minHeight: "50%"
     });
 
-    dialogRef.afterClosed().subscribe(newTask => {
+    dialogRef.afterClosed().subscribe(newTasksText => {
 
-      if (newTask) {
+      if (newTasksText) {
 
-        // this.updateTask(newTask);
+        let newTasks = GroupTask.textToGroupTaskList(newTasksText);
+        this._replaceTasks(oldTasks, newTasks);
 
       }
 
@@ -258,21 +263,48 @@ export class GroupDashboardComponent implements OnInit {
   }
 
 
-  showTasksEditor() {
+  private _replaceTasks(oldTasks: GroupTask[], newTasks: GroupTask[]) {
 
-    const dialogRef = this.dialog.open(TasksEditorComponent, {
-      data: this.group.getTasksString(),
-      maxWidth: "80%",
-      minHeight: "50%"
+    let oldTaskIdTextMap = {};
+    let lastId = -1;
+
+    Object.values(oldTasks).forEach(task => {
+      oldTaskIdTextMap[task.title] = task.id;
+
+      if (task.id > lastId) {
+        lastId = task.id;
+      }
     });
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    Object.values(newTasks).forEach(newTask => {
+      newTask.id = oldTaskIdTextMap[newTask.title] ? oldTaskIdTextMap[newTask.title].id : lastId++;
 
-      if (dialogResult) {
+    });
+
+    // ******
+
+
+    let newTaskIdTextMap = {};
+    Object.values(newTasks).forEach(newTask => {
+      newTaskIdTextMap[newTask.title] = newTask.id;
+    });
+
+    Object.values(oldTasks).forEach(task => {
+      if (!newTaskIdTextMap[task.title]) {
+
+        Object.values(this.group.membersTasksStatuses).forEach(_memberTasksStatuses => {
+          Object.values(_memberTasksStatuses).forEach(taskStatus => {
+            if (taskStatus.groupTaskId == task.id) {
+              delete _memberTasksStatuses[task.id];
+            }
+          });
+        });
 
       }
-
     });
+
+    this.group.tasks = newTasks;
+    this.groupsApi.updateGroupTasks(this.group.id, this.group.tasks, this.group.membersTasksStatuses, false);
 
   }
 

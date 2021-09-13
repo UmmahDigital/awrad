@@ -60,7 +60,7 @@
         </mat-tab>
 
 
-        <mat-tab label="المجموعة">
+        <mat-tab label="المجموعة  ({{group.membersCount}} أعضاء)">
 
 
             <!-- <app-group-progress [current]="progress[TASK_STATUS.DONE]" style="margin-top: 32px;"
@@ -73,35 +73,32 @@
 
             <section *ngIf="showGroupMembers">
 
+                <div *ngIf="isAdmin" class="center-center" style="flex-direction: row;">
 
-                <header>
-                    أعضاء المجموعة ({{group.membersCount}})
-                </header>
-
-                <div *ngIf="isAdmin" class="center-center" style="flex-direction: column;">
-
-                    <div class="tip">
-                        <strong>لمسؤول المجموعة:</strong>
-
-                        يمكنك الضغط على اسم العضو لتعديل حالة تنفيذ المهمّة لديه. كما ويمكنك تعديل الأعضاء عن طريق الضغط
-                        على كبسة التعديل أدناه.
+                    <div class="center-center" style="flex: 2;">
+                        <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
+                            (click)="isMembersListEditMode = !isMembersListEditMode">
+                            <mat-icon>edit</mat-icon>
+                        </mat-button-toggle>
                     </div>
 
-                    <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
-                        (click)="isMembersListEditMode = !isMembersListEditMode">
-                        <mat-icon>edit</mat-icon>
-                    </mat-button-toggle>
+                    <div class="tip" style="flex: 8;">
+                        <strong>لمسؤول المجموعة:</strong>
+                        <br />
+
+                        إضغط على إشارة القلم لتعديل أعضاء المجموعة.
+
+                    </div>
+
+
+
+
                 </div>
-
-
-
 
 
                 <app-group-members [members]="this.group.getMembers()" [isEditMode]="isMembersListEditMode"
                     (onMemberRemove)="removeGroupMember($event)" (onMemberAdd)="addGroupMember($event)">
                 </app-group-members>
-
-
 
 
                 <!-- (onMemberClick)="toggleMemberTaskState($event)" -->
@@ -124,71 +121,62 @@
 
 
         <mat-tab *ngIf="isAdmin" label="إدارة المجموعة">
-            <section *ngIf="isAdmin" class="admin-tools">
+            <section class="admin-tools">
 
-                <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;">
+
+                <button mat-flat-button (click)="shareStatusMsg(); adminPanelOpen=false;" style="background: #25D366;"
+                    class="mat-elevation-z1">
                     <mat-icon>format_list_numbered_rtl</mat-icon>
-                    <span>مشاركة وضع المجموعة</span>
+                    <span>مشاركة وضع الأوراد</span>
                 </button>
 
-                <!-- <button mat-flat-button (click)="shareStatusMsgWhatsapp(); adminPanelOpen=false;" class="whatsapp-btn">
-                    <mat-icon>format_list_numbered_rtl</mat-icon>
-                    <span>مشاركة وضع المجموعة - وتسأب</span>
+                <hr />
+
+                <button mat-flat-button (click)="showTasksEditor(); adminPanelOpen=false;" class="mat-elevation-z1">
+                    <mat-icon>refresh</mat-icon>
+                    <span>دورة جديدة مع نفس الأوراد</span>
+                </button>
+
+
+                <!-- <button mat-flat-button (click)="showTasksEditor(); adminPanelOpen=false;" class="mat-elevation-z1">
+                    <mat-icon>sports_score</mat-icon>
+                    <span></span>
                 </button> -->
 
-                <!-- whatsapp direct share? -->
-
-
-
-                <button mat-flat-button (click)="showTasksEditor(); adminPanelOpen=false;">
-                    <mat-icon>sports_score</mat-icon>
-                    <span>تعديل الأوراد</span>
-                </button>
-
-
-                <!-- <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
-                    <mat-icon>sports_score</mat-icon>
-                    <span>نفس المهمّات من جديد</span>
-                </button>
-
-                <button mat-flat-button (click)="groupChildComponent.showNewTaskDialog(); adminPanelOpen=false;">
-                    <mat-icon>sports_score</mat-icon>
-                    <span>مهمّات جديدة</span>
-                </button> -->
-
-
-
-
-
-
-                <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;">
+                <button mat-flat-button (click)="showTasksEditor('edit'); adminPanelOpen=false;"
+                    class="mat-elevation-z1">
                     <mat-icon>edit</mat-icon>
-                    <span>تعديل تفاصيل المجموعة</span>
+                    <span>تعديل الأوراد الحاليّة</span>
+                </button>
+
+                <button mat-flat-button (click)="showTasksEditor('new'); adminPanelOpen=false;"
+                    class="mat-elevation-z1">
+                    <mat-icon>checklist_rtl</mat-icon>
+                    <span>أوراد جديدة</span>
                 </button>
 
 
-                <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;">
-                    <mat-icon>link</mat-icon>
-                    مشاركة رابط المجموعة
-                </button>
-
-                <!--                 
-                <mat-expansion-panel [expanded]="adminPanelOpen">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <mat-icon>verified</mat-icon>
-                            <span>
-                                أدوات مسؤول المجموعة
-                            </span>
-                        </mat-panel-title>
-
-                    </mat-expansion-panel-header>
+                <hr />
 
 
-                    
+                <div class="center-center secondary-admin-actions" style="align-content: space-around;">
+
+                    <button mat-flat-button (click)="showEditGroupDialog(); adminPanelOpen=false;"
+                        class="mat-elevation-z1">
+                        <!-- <mat-icon>edit</mat-icon> -->
+                        <span>تعديل تفاصيل المجموعة</span>
+                    </button>
+
+                    <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;" class="mat-elevation-z1">
+                        <!-- <mat-icon>link</mat-icon> -->
+                        مشاركة رابط المجموعة
+                    </button>
+
+                </div>
 
 
-                </mat-expansion-panel> -->
+
+
             </section>
         </mat-tab>
     </mat-tab-group>
