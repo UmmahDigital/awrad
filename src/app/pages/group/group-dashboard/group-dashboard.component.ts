@@ -27,7 +27,7 @@ import { TasksEditorComponent } from 'src/app/shared/tasks-editor/tasks-editor.c
   styleUrls: ['./group-dashboard.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class GroupDashboardComponent implements OnInit, OnChanges {
+export class GroupDashboardComponent implements OnInit {
 
 
   group: Group;
@@ -50,7 +50,9 @@ export class GroupDashboardComponent implements OnInit, OnChanges {
 
   myMember;
   progress;
+  progressMatrix;
   totalDoneTasks;
+
 
 
   constructor(private groupsApi: GroupService,
@@ -91,6 +93,7 @@ export class GroupDashboardComponent implements OnInit, OnChanges {
 
       this.myMember = this.group.getMember(this.username);
       this.progress = this.group.getProgress();
+      this.progressMatrix = this.group.getProgressMatrix();
       this.totalDoneTasks = this.group.totalDoneTasks || 0;
 
     });
@@ -188,13 +191,6 @@ export class GroupDashboardComponent implements OnInit, OnChanges {
 
   // GROUP
 
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.myMember = this.group.getMember(this.username);
-    // this.progress = this.group.getProgress();
-    // this.totalDoneTasks = this.group.totalDoneTasks || 0;
-
-  }
 
   taskToggled(newTaskStatus: TaskStatus) {
 

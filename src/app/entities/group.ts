@@ -102,16 +102,18 @@ export class Group {
     //*********************** */
 
 
-    public getMembers(): GroupMember[] {
-        return Object.values(this.members);
-    }
+
 
     public getMember(name): GroupMember {
         return this.members[name];
     }
 
+    public getMembers(): GroupMember[] {
+        return Object.values(this.members).sort((a, b) => { return a.name.localeCompare(b.name); }); // Alphabetical Sort
+    }
+
     public getTasks(): GroupTask[] {
-        return Object.values(this.tasks);
+        return Object.values(this.tasks).sort((a, b) => { return a.title.localeCompare(b.title); });
     }
 
     public getTasksString(): string {
@@ -149,53 +151,44 @@ export class Group {
         return this.lastGeneratedTaskId;
     }
 
+    public getProgressMatrix(): number[][] { // rows are members
+
+        function _initMatrix(matrix: number[][], rowCount, columnCount) {
+
+            matrix = [];
+
+            for (let i = 0; i < rowCount; i++) {
+                matrix[i] = [];
+
+                for (let j = 0; j < columnCount; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+
+        let members = this.getMembers();
+        let tasks = this.getTasks();
+
+        let progress: number[][] = [];
+        _initMatrix(progress, members.length, tasks.length);
+
+
+        for (let i = 0; i < members.length; i++) {
+            progress[i] = [];
+
+            for (let j = 0; j < tasks.length; j++) {
+                progress[i][j] = members[i].getTaskStatus(tasks[j].id);
+            }
+        }
+
+        return progress;
+
+    }
 
     public toObj() {
 
-        // return Object.assign({}, this);
-
         return JSON.parse(JSON.stringify(this));
-
-        // let obj = {
-        //     id: this.id,
-        //     title: this.title,
-        //     description: this.description,
-        //     author: this.author,
-        //     creationTimestamp: this.creationTimestamp,
-        //     cycle: this.cycle,
-        //     targetDate: this.targetDate,
-        //     admins: this.admins,
-        //     totalDoneTasks: this.totalDoneTasks,
-        //     lastGeneratedTaskId: this.lastGeneratedTaskId,
-
-        //     tasks: {},
-        //     members: {},
-        //     membersTasksStatuses: {},
-        // };
-
-
-        // Object.keys(this.tasks).forEach(taskId => {
-        //     obj.tasks[taskId] = this.tasks[taskId];
-        // });
-
-        // Object.keys(this.members).forEach(memberName => {
-        //     obj.members[memberName] = this.members[memberName];
-        // });
-
-        // Object.keys(this.membersTasksStatuses).forEach(memberName => {
-
-        //     obj.membersTasksStatuses[memberName] = {};
-
-        //     Object.keys(this.membersTasksStatuses[memberName]).forEach(taskId => {
-        //         obj.membersTasksStatuses[memberName][taskId] = Object.assign({}, this.membersTasksStatuses[memberName][taskId]);
-        //     });
-
-        // });
-
-        // // remove empty properties to prevent firebase errors
-        // Object.keys(obj).forEach(key => obj[key] === undefined && delete obj[key]);
-
-        // return obj;
     }
 
     //*********************** */
@@ -207,6 +200,7 @@ export class Group {
     public static refineUsername(name) {
         return name.trim();
     }
+
 
     // public static generateMembersTasksStatuses(members: Record<string, GroupMember>, tasksStatuses: Record<string, TaskStatus[]>) {
 

@@ -1,0 +1,9 @@
+<table id='status-table' *ngIf="progressMatrix" dir="ltr" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr *ngFor="let member of progressMatrix;">
+            <td *ngFor="let taskStatus of member"
+                [ngClass]="{ 'todo': taskStatus == TASK_STATUS.TODO, 'doing': taskStatus == TASK_STATUS.DOING, 'done': taskStatus == TASK_STATUS.DONE}">
+            </td>
+        </tr>
+    </tbody>
+</table>

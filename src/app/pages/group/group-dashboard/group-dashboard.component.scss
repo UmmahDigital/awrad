@@ -8,8 +8,9 @@
   height: 64px;
 }
 
+
+
 .dashboard-header {
-  margin: -32px -32px 0;
   padding: 16px;
   background: $primary-color;
 
@@ -217,4 +218,15 @@ section#group{
   margin-top: 16px;
 }
 
+
 }
+
+#dashboard-container{
+  display: block;
+  margin: -32px;
+}
+
+mat-tab-body{
+  padding: 32px!important;
+}
+

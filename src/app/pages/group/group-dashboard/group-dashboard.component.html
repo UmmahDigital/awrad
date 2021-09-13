@@ -1,4 +1,4 @@
-<div *ngIf="group" style="position: relative;">
+<div *ngIf="group" style="position: relative;" id="dashboard-container">
 
 
     <app-celebration *ngIf="showCelebration" class="celebration-container"
@@ -33,9 +33,9 @@
 
     <mat-tab-group mat-stretch-tabs>
 
-
-
         <mat-tab label="أورادي">
+
+
 
             <section id="group" class="group-container">
 
@@ -63,9 +63,12 @@
         <mat-tab label="المجموعة">
 
 
-            <app-group-progress [current]="progress[TASK_STATUS.DONE]" style="margin-top: 32px;"
+            <!-- <app-group-progress [current]="progress[TASK_STATUS.DONE]" style="margin-top: 32px;"
                 [target]="progress?.total">
-            </app-group-progress>
+            </app-group-progress> -->
+
+
+            <app-group-progress-matrix [progressMatrix]="progressMatrix"></app-group-progress-matrix>
 
 
             <section *ngIf="showGroupMembers">
@@ -189,19 +192,6 @@
             </section>
         </mat-tab>
     </mat-tab-group>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="spacer"></div>
 
