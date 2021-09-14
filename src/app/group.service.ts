@@ -45,6 +45,10 @@ export class GroupService {
 
     this.groupsDocs[groupId].valueChanges({ idField: 'id' }).subscribe((group: Group) => {
 
+      if (!group.title) {
+        return;
+      }
+
       this._currentGroupObj = new Group(group);
 
       this._currentGroup.next(this._currentGroupObj);

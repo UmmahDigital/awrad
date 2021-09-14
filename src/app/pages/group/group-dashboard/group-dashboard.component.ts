@@ -265,11 +265,11 @@ export class GroupDashboardComponent implements OnInit {
 
   private _replaceTasks(oldTasks: GroupTask[], newTasks: GroupTask[]) {
 
-    let oldTaskIdTextMap = {};
+    let oldTasksIdByTitle = {};
     let lastId = -1;
 
     Object.values(oldTasks).forEach(task => {
-      oldTaskIdTextMap[task.title] = task.id;
+      oldTasksIdByTitle[task.title] = task.id;
 
       if (task.id > lastId) {
         lastId = task.id;
@@ -277,30 +277,37 @@ export class GroupDashboardComponent implements OnInit {
     });
 
     Object.values(newTasks).forEach(newTask => {
-      newTask.id = oldTaskIdTextMap[newTask.title] ? oldTaskIdTextMap[newTask.title].id : lastId++;
 
+      let newId = (oldTasksIdByTitle[newTask.title] != null) ? oldTasksIdByTitle[newTask.title] : ++lastId;
+      let title = newTask.title;
+
+      delete newTasks[newTask.id];
+
+      newTasks[newId] = new GroupTask({ id: newId, title: title });
     });
 
     // ******
 
-
-    let newTaskIdTextMap = {};
+    let newTasksIdByTitle = {};
     Object.values(newTasks).forEach(newTask => {
-      newTaskIdTextMap[newTask.title] = newTask.id;
+      newTasksIdByTitle[newTask.title] = newTask.id;
     });
 
+    let removedTasksIds: number[] = [];
+
     Object.values(oldTasks).forEach(task => {
-      if (!newTaskIdTextMap[task.title]) {
-
-        Object.values(this.group.membersTasksStatuses).forEach(_memberTasksStatuses => {
-          Object.values(_memberTasksStatuses).forEach(taskStatus => {
-            if (taskStatus.groupTaskId == task.id) {
-              delete _memberTasksStatuses[task.id];
-            }
-          });
-        });
-
+      if (newTasksIdByTitle[task.title] == null) {
+        removedTasksIds.push(task.id);
+        delete newTasks[task.id];
       }
+    });
+
+    Object.values(this.group.membersTasksStatuses).forEach(_memberTasksStatuses => {
+      Object.values(_memberTasksStatuses).forEach(taskStatus => {
+        if (removedTasksIds.indexOf(taskStatus.groupTaskId) > -1) {
+          delete _memberTasksStatuses[taskStatus.groupTaskId];
+        }
+      });
     });
 
     this.group.tasks = newTasks;

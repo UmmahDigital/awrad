@@ -17,7 +17,12 @@ export function GET_JUZ_READ_EXTERNAL_URL(juzIndex: number): string {
 
 
 export function toJsonObj(obj) {
-    return JSON.parse(JSON.stringify(obj));
+
+
+    return JSON.parse(JSON.stringify(Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))));
+
+    // return JSON.parse(JSON.stringify(obj));
+
 }
 
 
