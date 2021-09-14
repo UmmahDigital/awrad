@@ -13,7 +13,6 @@ export class Group {
     targetDate?: string;
     admins?: string;
     totalDoneTasks: number;
-    lastGeneratedTaskId: number;
 
     tasks: Record<number, GroupTask>;
     members: Record<string, GroupMember>;
@@ -125,32 +124,32 @@ export class Group {
         return this.tasks[id];
     }
 
-    public updateTasks(newTasks: Record<string, GroupTask>) {
+    // public updateTasks(newTasks: Record<string, GroupTask>) {
 
-        this.getMembers().forEach(member => {
+    //     this.getMembers().forEach(member => {
 
-            let tasksStatuses = Object.values(member.getTasksStatuses());
+    //         let tasksStatuses = Object.values(member.getTasksStatuses());
 
-            tasksStatuses.forEach(taskStatus => {
-                if (!newTasks[taskStatus.groupTaskId]) {
-                    member.removeTaskStatus(taskStatus.groupTaskId);
-                }
-            });
-        });
+    //         tasksStatuses.forEach(taskStatus => {
+    //             if (!newTasks[taskStatus.groupTaskId]) {
+    //                 member.removeTaskStatus(taskStatus.groupTaskId);
+    //             }
+    //         });
+    //     });
 
-        Object.values(newTasks).forEach(newTask => {
-            if (!newTask.id) {
-                newTask.id = this._getNewTaskId();
-            }
-        });
+    //     Object.values(newTasks).forEach(newTask => {
+    //         if (!newTask.id) {
+    //             newTask.id = this._getNewTaskId();
+    //         }
+    //     });
 
-        this.tasks = newTasks;
-    }
+    //     this.tasks = newTasks;
+    // }
 
-    private _getNewTaskId() {
-        this.lastGeneratedTaskId++;
-        return this.lastGeneratedTaskId;
-    }
+    // private _getNewTaskId() {
+    //     this.lastGeneratedTaskId++;
+    //     return this.lastGeneratedTaskId;
+    // }
 
     public getProgressMatrix(): number[][] { // rows are members
 

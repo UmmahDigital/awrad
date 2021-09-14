@@ -14,9 +14,9 @@ export class GroupTask {
         return Object.assign({}, ...tasks.map((x) => ({ [x.id]: x })));
     }
 
-    public static textToGroupTaskList(text: string): GroupTask[] {
+    public static textToGroupTaskList(text: string): Record<number, GroupTask> {
 
-        let tasks: GroupTask[] = [];
+        let tasks: Record<number, GroupTask> = {};
         let lines = text.split(/\r?\n/);
 
         lines.forEach((line, index) => {
@@ -24,10 +24,10 @@ export class GroupTask {
             line = line.trim();
 
             if (line) {
-                tasks.push(new GroupTask({
+                tasks[index] = new GroupTask({
                     id: index,
                     title: line
-                }));
+                });
             }
 
         });

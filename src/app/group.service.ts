@@ -64,7 +64,7 @@ export class GroupService {
   }
 
 
-  public createGroup(title, description, author, tasks: GroupTask[]) {
+  public createGroup(title, description, author, tasks: Record<number, GroupTask>) {
 
     let newGroup = new Group({
       "title": title,
@@ -72,8 +72,7 @@ export class GroupService {
       "author": author,
       "cycle": 0,
       "totalDoneTasks": 0,
-      "lastGeneratedTaskId": tasks.length,
-      "tasks": GroupTask.array2Obj(tasks),
+      "tasks": tasks, //GroupTask.array2Obj(tasks),
       "members": {},
       "membersTasksStatuses": {},
     });

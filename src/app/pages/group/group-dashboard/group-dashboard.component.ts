@@ -241,7 +241,7 @@ export class GroupDashboardComponent implements OnInit {
 
   showTasksEditor() {
 
-    let oldTasks = { ...this.group.getTasks() };
+    let oldTasks = { ...this.group.tasks };
 
     const dialogRef = this.dialog.open(TasksEditorComponent, {
       data: this.group.getTasksString(),
@@ -263,50 +263,30 @@ export class GroupDashboardComponent implements OnInit {
   }
 
 
-  private _replaceTasks(oldTasks: GroupTask[], newTasks: GroupTask[]) {
-
-    let oldTasksIdByTitle = {};
-    let lastId = -1;
-
-    Object.values(oldTasks).forEach(task => {
-      oldTasksIdByTitle[task.title] = task.id;
-
-      if (task.id > lastId) {
-        lastId = task.id;
-      }
-    });
-
-    Object.values(newTasks).forEach(newTask => {
-
-      let newId = (oldTasksIdByTitle[newTask.title] != null) ? oldTasksIdByTitle[newTask.title] : ++lastId;
-      let title = newTask.title;
-
-      delete newTasks[newTask.id];
-
-      newTasks[newId] = new GroupTask({ id: newId, title: title });
-    });
-
-    // ******
+  private _replaceTasks(oldTasks: Record<number, GroupTask>, newTasks: Record<number, GroupTask>) {
 
     let newTasksIdByTitle = {};
-    Object.values(newTasks).forEach(newTask => {
-      newTasksIdByTitle[newTask.title] = newTask.id;
+
+    Object.values(newTasks).forEach(task => {
+      newTasksIdByTitle[task.title] = task.id;
     });
 
-    let removedTasksIds: number[] = [];
-
-    Object.values(oldTasks).forEach(task => {
-      if (newTasksIdByTitle[task.title] == null) {
-        removedTasksIds.push(task.id);
-        delete newTasks[task.id];
-      }
-    });
 
     Object.values(this.group.membersTasksStatuses).forEach(_memberTasksStatuses => {
       Object.values(_memberTasksStatuses).forEach(taskStatus => {
-        if (removedTasksIds.indexOf(taskStatus.groupTaskId) > -1) {
+
+        let taskTitle = oldTasks[taskStatus.groupTaskId].title;
+        let taskNewId = newTasksIdByTitle[taskTitle];
+
+        if (taskNewId == null) {
           delete _memberTasksStatuses[taskStatus.groupTaskId];
+          return;
         }
+
+        if (taskNewId != taskStatus.groupTaskId) {
+          _memberTasksStatuses[taskNewId] = new TaskStatus({ groupTaskId: taskNewId, status: taskStatus.status });
+        }
+
       });
     });
 
@@ -315,5 +295,63 @@ export class GroupDashboardComponent implements OnInit {
 
   }
 
+
+
+  // private _replaceTasks(oldTasks: Record<number, GroupTask>, newTasks: Record<number, GroupTask>) {
+
+  //   let result: Record<number, GroupTask> = {};
+
+  //   let oldTasksIdByTitle = {};
+  //   let lastId = -1;
+
+  //   Object.values(oldTasks).forEach(task => {
+  //     oldTasksIdByTitle[task.title] = task.id;
+
+  //     if (task.id > lastId) {
+  //       lastId = task.id;
+  //     }
+  //   });
+
+  //   Object.values(newTasks).forEach(newTask => {
+
+  //     let newId = (oldTasksIdByTitle[newTask.title] != null) ? oldTasksIdByTitle[newTask.title] : ++lastId;
+  //     let title = newTask.title;
+
+  //     // delete newTasks[newTask.id];
+
+  //     result[newId] = new GroupTask({ id: newId, title: title });
+
+  //     // newTasks[newId] = new GroupTask({ id: newId, title: title });
+
+  //   });
+
+  //   // ******
+
+  //   let newTasksIdByTitle = {};
+  //   Object.values(newTasks).forEach(newTask => {
+  //     newTasksIdByTitle[newTask.title] = newTask.id;
+  //   });
+
+  //   let removedTasksIds: number[] = [];
+
+  //   Object.values(oldTasks).forEach(task => {
+  //     if (newTasksIdByTitle[task.title] == null) {
+  //       removedTasksIds.push(task.id);
+  //       delete newTasks[task.id];
+  //     }
+  //   });
+
+  //   Object.values(this.group.membersTasksStatuses).forEach(_memberTasksStatuses => {
+  //     Object.values(_memberTasksStatuses).forEach(taskStatus => {
+  //       if (removedTasksIds.indexOf(taskStatus.groupTaskId) > -1) {
+  //         delete _memberTasksStatuses[taskStatus.groupTaskId];
+  //       }
+  //     });
+  //   });
+
+  //   this.group.tasks = result;
+  //   this.groupsApi.updateGroupTasks(this.group.id, this.group.tasks, this.group.membersTasksStatuses, false);
+
+  // }
 
 }
