@@ -132,25 +132,19 @@
 
                 <hr />
 
-                <button mat-flat-button (click)="showTasksEditor(); adminPanelOpen=false;" class="mat-elevation-z1">
+                <button mat-flat-button (click)="startNewCycleWithSameTasks(); adminPanelOpen=false;"
+                    class="mat-elevation-z1">
                     <mat-icon>refresh</mat-icon>
                     <span>دورة جديدة مع نفس الأوراد</span>
                 </button>
 
-
-                <!-- <button mat-flat-button (click)="showTasksEditor(); adminPanelOpen=false;" class="mat-elevation-z1">
-                    <mat-icon>sports_score</mat-icon>
-                    <span></span>
-                </button> -->
-
-                <button mat-flat-button (click)="showTasksEditor('edit'); adminPanelOpen=false;"
+                <button mat-flat-button (click)="showTasksEditor(false); adminPanelOpen=false;"
                     class="mat-elevation-z1">
                     <mat-icon>edit</mat-icon>
                     <span>تعديل الأوراد الحاليّة</span>
                 </button>
 
-                <button mat-flat-button (click)="showTasksEditor('new'); adminPanelOpen=false;"
-                    class="mat-elevation-z1">
+                <button mat-flat-button (click)="showTasksEditor(true); adminPanelOpen=false;" class="mat-elevation-z1">
                     <mat-icon>checklist_rtl</mat-icon>
                     <span>أوراد جديدة</span>
                 </button>

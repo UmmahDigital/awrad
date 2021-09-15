@@ -239,7 +239,7 @@ export class GroupDashboardComponent implements OnInit {
     this.alert.show("تمّ إضافة  " + member.name + "  بنجاح", 2500);
   }
 
-  showTasksEditor() {
+  showTasksEditor(isNewTasks: boolean = false) {
 
     let oldTasks = { ...this.group.tasks };
 
@@ -254,8 +254,36 @@ export class GroupDashboardComponent implements OnInit {
       if (newTasksText) {
 
         let newTasks = GroupTask.textToGroupTaskList(newTasksText);
+
+        if (isNewTasks) {
+          this.group.membersTasksStatuses = {};
+        }
+
         this._replaceTasks(oldTasks, newTasks);
 
+        this.groupsApi.updateGroupTasks(this.group.id, this.group.tasks, this.group.membersTasksStatuses, isNewTasks);
+
+      }
+
+    });
+
+  }
+
+  public startNewCycleWithSameTasks() {
+
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogModel(
+        "تأكيد بدأ دورة جديدة مع نفس الأوراد",
+        ""),
+      maxWidth: "80%"
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+
+      if (dialogResult) {
+        this.group.membersTasksStatuses = {};
+        this.groupsApi.updateGroupTasks(this.group.id, this.group.tasks, this.group.membersTasksStatuses, true);
       }
 
     });
@@ -265,33 +293,36 @@ export class GroupDashboardComponent implements OnInit {
 
   private _replaceTasks(oldTasks: Record<number, GroupTask>, newTasks: Record<number, GroupTask>) {
 
+
     let newTasksIdByTitle = {};
 
     Object.values(newTasks).forEach(task => {
       newTasksIdByTitle[task.title] = task.id;
     });
 
+    this.group.tasks = newTasks;
 
-    Object.values(this.group.membersTasksStatuses).forEach(_memberTasksStatuses => {
-      Object.values(_memberTasksStatuses).forEach(taskStatus => {
+
+    let newMembersTasksStatuses: Record<string, Record<number, TaskStatus>> = {};
+
+    Object.keys(this.group.membersTasksStatuses).forEach(memberName => {
+
+      newMembersTasksStatuses[memberName] = {};
+
+      Object.values(this.group.membersTasksStatuses[memberName]).forEach(taskStatus => {
 
         let taskTitle = oldTasks[taskStatus.groupTaskId].title;
         let taskNewId = newTasksIdByTitle[taskTitle];
 
-        if (taskNewId == null) {
-          delete _memberTasksStatuses[taskStatus.groupTaskId];
-          return;
+        if (taskNewId != null && taskStatus.status != TASK_STATUS.TODO) {
+          newMembersTasksStatuses[memberName][taskNewId] = new TaskStatus({ groupTaskId: taskNewId, status: taskStatus.status });
         }
-
-        if (taskNewId != taskStatus.groupTaskId) {
-          _memberTasksStatuses[taskNewId] = new TaskStatus({ groupTaskId: taskNewId, status: taskStatus.status });
-        }
-
       });
+
     });
 
-    this.group.tasks = newTasks;
-    this.groupsApi.updateGroupTasks(this.group.id, this.group.tasks, this.group.membersTasksStatuses, false);
+    this.group.membersTasksStatuses = newMembersTasksStatuses;
+
 
   }
 

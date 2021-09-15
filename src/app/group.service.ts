@@ -161,7 +161,7 @@ export class GroupService {
 
     let updatedObj = {
       "tasks": toJsonObj(updatedTasks),
-      "tasksStatuses": toJsonObj(updatedTasksStatuses),
+      "membersTasksStatuses": toJsonObj(updatedTasksStatuses),
       "cycle": firebase.default.firestore.FieldValue.increment(isNewCycle ? 1 : 0)
     };
 
