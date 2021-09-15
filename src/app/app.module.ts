@@ -20,6 +20,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 // import { AngularFireAuthModule } from '@angular/fire/auth';
 
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+
+
 import { HomeComponent } from './pages/home/home.component';
 import { CreateGroupComponent } from './pages/create-group/create-group.component';
 import { GroupInviteComponent } from './pages/create-group/group-invite/group-invite.component';
@@ -62,6 +65,7 @@ import { TasksComposerComponent } from './shared/tasks-composer/tasks-composer.c
 import { MemberProgressComponent } from './shared/member-progress/member-progress.component';
 import { TasksEditorComponent } from './shared/tasks-editor/tasks-editor.component';
 import { GroupProgressMatrixComponent } from './shared/group-progress-matrix/group-progress-matrix.component';
+import { NotificationComponent } from './shared/notification/notification.component';
 
 
 const routes: Routes = [
@@ -121,7 +125,8 @@ const routes: Routes = [
     TasksComposerComponent,
     MemberProgressComponent,
     TasksEditorComponent,
-    GroupProgressMatrixComponent
+    GroupProgressMatrixComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -130,6 +135,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     DragDropModule,
     RouterModule.forRoot(routes, { paramsInheritanceStrategy: 'always', scrollPositionRestoration: 'enabled' }),
+    AngularFireMessagingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
