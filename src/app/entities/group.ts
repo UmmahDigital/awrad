@@ -13,6 +13,7 @@ export class Group {
     targetDate?: string;
     admins?: string;
     totalDoneTasks: number;
+    isAdminExcluded: boolean;
 
     tasks: Record<number, GroupTask>;
     members: Record<string, GroupMember>;
@@ -36,6 +37,11 @@ export class Group {
         let count = 0;
 
         Object.keys(this.members).forEach((memberName) => {
+
+            if (this.isAdminExcluded && memberName == this.author) {
+                return;
+            }
+
             this.members[memberName] = new GroupMember({ name: memberName });
             this.members[memberName].setTasksStatuses(this.membersTasksStatuses[memberName] || {}, tasks);
             count++;

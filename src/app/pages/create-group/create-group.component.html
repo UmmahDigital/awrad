@@ -47,6 +47,12 @@
             <textarea rows="7" matInput formControlName="tasks" required></textarea>
         </mat-form-field>
 
+        <!-- <mat-label>وصف المجموعة (اختياري)</mat-label> -->
+        <mat-checkbox formControlName="isAdminExcluded">إعفاء مسؤول المجموعة من الأوراد</mat-checkbox>
+
+
+
+
 
         <button type="submit" class="block large action-btn" mat-raised-button
             color="{{createGroupForm.form.valid ? 'accent' : ''}}" [disabled]="!createGroupForm.form.valid">

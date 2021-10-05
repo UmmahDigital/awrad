@@ -37,7 +37,8 @@ export class CreateGroupComponent implements OnInit {
       title: ['', Validators.required],
       author: ['', Validators.required],
       description: ['', ''],
-      tasks: ['', Validators.required]
+      tasks: ['', Validators.required],
+      isAdminExcluded: ['', ''],
     });
 
   }
@@ -48,10 +49,11 @@ export class CreateGroupComponent implements OnInit {
     let description = this.groupDetailsFormGroup.controls['description'].value;
     let author = this.groupDetailsFormGroup.controls['author'].value;
     let tasksText = this.groupDetailsFormGroup.controls['tasks'].value;
+    let isAdminExcluded = this.groupDetailsFormGroup.controls['isAdminExcluded'].value;
 
     let tasks = GroupTask.textToGroupTaskList(tasksText);
 
-    this.groupsApi.createGroup(title, description, author, tasks).then(docRef => {
+    this.groupsApi.createGroup(title, description, author, tasks, isAdminExcluded).then(docRef => {
 
       const groupId = docRef.id;
 

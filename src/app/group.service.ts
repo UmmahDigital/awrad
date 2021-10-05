@@ -51,6 +51,12 @@ export class GroupService {
 
       this._currentGroupObj = new Group(group);
 
+      if (this._currentGroupObj.isAdminExcluded) {
+        delete this._currentGroupObj.members[this._currentGroupObj.author];
+
+        // this._currentGroupObj.admins.split(",").forEach();
+      }
+
       this._currentGroup.next(this._currentGroupObj);
 
     });
@@ -64,7 +70,7 @@ export class GroupService {
   }
 
 
-  public createGroup(title, description, author, tasks: Record<number, GroupTask>) {
+  public createGroup(title, description, author, tasks: Record<number, GroupTask>, isAdminExcluded) {
 
     let newGroup = new Group({
       "title": title,
@@ -75,6 +81,7 @@ export class GroupService {
       "tasks": tasks, //GroupTask.array2Obj(tasks),
       "members": {},
       "membersTasksStatuses": {},
+      "isAdminExcluded": isAdminExcluded
     });
 
     newGroup["members"][author] = new GroupMember({ name: author });

@@ -163,6 +163,13 @@ section > p {
   padding: 16px;
   border-radius: 4px;
   display: block;
+
+  button{
+    display: block;
+    margin: 16px auto;
+    line-height: 64px;
+    padding: 0 32px;
+  }
 }
 
 .help-btn {

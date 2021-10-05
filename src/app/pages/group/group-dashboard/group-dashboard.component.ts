@@ -91,7 +91,14 @@ export class GroupDashboardComponent implements OnInit {
 
       }
 
-      this.myMember = this.group.getMember(this.username);
+      if (this.username == group.author) {
+        this.myMember = new GroupMember({ name: this.username });
+      }
+      else {
+        this.myMember = this.group.getMember(this.username);
+      }
+
+
       this.progress = this.group.getProgress();
       this.progressMatrix = this.group.getProgressMatrix();
       this.totalDoneTasks = this.group.totalDoneTasks || 0;
@@ -104,13 +111,12 @@ export class GroupDashboardComponent implements OnInit {
     return StatusMessages.fromGroup(this.group);
   }
 
-
   celebrate() {
     this.showCelebration = true;
 
     setTimeout(() => {
       this.showCelebration = false;
-    }, 5000);
+    }, 4000);
   }
 
   shareStatusMsg() {

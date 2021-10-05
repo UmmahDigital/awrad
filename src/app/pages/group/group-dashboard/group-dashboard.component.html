@@ -1,8 +1,7 @@
 <div *ngIf="group" style="position: relative;" id="dashboard-container">
 
 
-    <app-celebration *ngIf="showCelebration" class="celebration-container"
-        style="position: fixed; top: 0; left: 0; right: 0; z-index: 10000; bottom: 0;">
+    <app-celebration *ngIf="showCelebration" class="celebration-container">
     </app-celebration>
 
     <header class="dashboard-header" style="position: relative;">
@@ -30,31 +29,30 @@
 
     </header>
 
+    <!-- <section id="group" class="group-container"> -->
 
     <mat-tab-group mat-stretch-tabs>
 
-        <mat-tab label="أورادي">
+        <mat-tab label="أورادي" *ngIf="!(isAdmin && group.isAdminExcluded)">
 
 
 
-            <section id="group" class="group-container">
 
-                <span> السلام عليك يا <strong>{{username}}</strong>،
-                    <br />
-                    هذه أورادك الحاليّة في المجموعة:
-                </span>
-
-
-                <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.getTasksStatuses()"
-                    (onToggled)="taskToggled($event)">
-                </app-tasks>
+            <span> السلام عليك يا <strong>{{username}}</strong>،
+                <br />
+                هذه أورادك الحاليّة في المجموعة:
+            </span>
 
 
-                <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم:
-                    {{this.group.targetDate}}.</span>
+            <app-tasks [tasks]="group.getTasks()" [tasksStatuses]="myMember.getTasksStatuses()"
+                (onToggled)="taskToggled($event)">
+            </app-tasks>
 
 
-            </section>
+            <span *ngIf="this.group.targetDate" class="task-target-date">موعد التسليم:
+                {{this.group.targetDate}}.</span>
+
+
 
 
         </mat-tab>
@@ -68,37 +66,66 @@
             </app-group-progress> -->
 
 
-            <app-group-progress-matrix [progressMatrix]="progressMatrix"></app-group-progress-matrix>
+            <app-group-progress-matrix *ngIf="group.membersCount > 0" [progressMatrix]="progressMatrix">
+            </app-group-progress-matrix>
 
+            <div *ngIf="group.membersCount == 0">
+
+                <div class="tip">
+
+                    السلام عليكم يا {{group.author}}،
+
+                    <br />
+                    <br />
+
+
+                    حاليا لا يوجد أيّ عضو في مجموعتك.
+
+
+                    <button mat-flat-button (click)="shareInviteMsg();" class="mat-elevation-z1">
+                        مشاركة رابط الانضمام
+                    </button>
+
+
+                    كما ويمكنك إضافة الأعضاء يدويّا عن طريق الضفط
+                    على إشارة القلم أدناه.
+
+                </div>
+
+            </div>
 
             <section *ngIf="showGroupMembers">
 
-                <div *ngIf="isAdmin" class="center-center" style="flex-direction: row;">
+                <div *ngIf="isAdmin">
 
-                    <div class="center-center" style="flex: 2;">
-                        <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
-                            (click)="isMembersListEditMode = !isMembersListEditMode">
-                            <mat-icon>edit</mat-icon>
-                        </mat-button-toggle>
+                    <div class="center-center" style="flex-direction: row;">
+                        <div class="center-center" style="flex: 2;">
+                            <mat-button-toggle class="members-list-edit-btn" *ngIf="isAdmin"
+                                (click)="isMembersListEditMode = !isMembersListEditMode">
+                                <mat-icon>edit</mat-icon>
+                            </mat-button-toggle>
+                        </div>
+
+                        <div class="tip" style="flex: 8;">
+                            <strong>لمسؤول المجموعة:</strong>
+                            <br />
+
+                            إضغط على إشارة القلم لتعديل أعضاء المجموعة.
+
+                        </div>
+
                     </div>
 
-                    <div class="tip" style="flex: 8;">
-                        <strong>لمسؤول المجموعة:</strong>
-                        <br />
 
-                        إضغط على إشارة القلم لتعديل أعضاء المجموعة.
-
-                    </div>
-
-
+                    <app-group-members [members]="this.group.getMembers()" [isEditMode]="isMembersListEditMode"
+                        (onMemberRemove)="removeGroupMember($event)" (onMemberAdd)="addGroupMember($event)">
+                    </app-group-members>
 
 
                 </div>
 
 
-                <app-group-members [members]="this.group.getMembers()" [isEditMode]="isMembersListEditMode"
-                    (onMemberRemove)="removeGroupMember($event)" (onMemberAdd)="addGroupMember($event)">
-                </app-group-members>
+
 
 
                 <!-- (onMemberClick)="toggleMemberTaskState($event)" -->
@@ -163,7 +190,7 @@
 
                     <button mat-flat-button (click)="shareInviteMsg(); adminPanelOpen=false;" class="mat-elevation-z1">
                         <!-- <mat-icon>link</mat-icon> -->
-                        مشاركة رابط المجموعة
+                        مشاركة رابط الانضمام
                     </button>
 
                 </div>
@@ -174,6 +201,9 @@
             </section>
         </mat-tab>
     </mat-tab-group>
+
+    <!-- </section> -->
+
 
     <div class="spacer"></div>
 
