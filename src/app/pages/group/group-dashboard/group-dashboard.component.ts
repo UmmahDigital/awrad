@@ -55,6 +55,7 @@ export class GroupDashboardComponent implements OnInit {
 
 
 
+
   constructor(private groupsApi: GroupService,
     private localDB: LocalDatabaseService,
     private dialog: MatDialog,
@@ -91,17 +92,21 @@ export class GroupDashboardComponent implements OnInit {
 
       }
 
-      if (this.username == group.author) {
-        this.myMember = new GroupMember({ name: this.username });
-      }
-      else {
-        this.myMember = this.group.getMember(this.username);
-      }
+      // if (this.username == group.author) {
+      //   this.myMember = new GroupMember({ name: this.username });
+      // }
+      // else {
+      //   this.myMember = this.group.getMember(this.username);
+      // }
+
+      this.myMember = this.group.getMember(this.username);
+
 
 
       this.progress = this.group.getProgress();
       this.progressMatrix = this.group.getProgressMatrix();
       this.totalDoneTasks = this.group.totalDoneTasks || 0;
+
 
     });
 
