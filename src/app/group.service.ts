@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -116,7 +116,14 @@ export class GroupService {
 
 
   getGroups(groupsIds: string[]) {
-    return this.db.collection('groups', ref => ref.where('__name__', 'in', groupsIds)).valueChanges({ idField: 'id' }).pipe(map(_groups => {
+
+    let groups$ = [];
+
+    groupsIds.forEach(groupId => {
+      groups$.push(this.getGroupDetailsOnce(groupId));
+    });
+
+    return forkJoin(groups$).pipe(map((_groups: any) => {
 
       let groups: Group[] = [];
 
@@ -126,7 +133,7 @@ export class GroupService {
 
       return groups;
 
-    }));
+    }))
   }
 
 
